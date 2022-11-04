@@ -1,0 +1,1490 @@
+
+Node2.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000b24  00080000  00080000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .relocate     00000434  20000000  00080b24  00020000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000084  20000434  00080f58  00020434  2**2
+                  ALLOC
+  3 .stack        00000400  200004b8  00080fdc  00020434  2**0
+                  ALLOC
+  4 .heap         00000200  200008b8  000813dc  00020434  2**0
+                  ALLOC
+  5 .ARM.attributes 00000029  00000000  00000000  00020434  2**0
+                  CONTENTS, READONLY
+  6 .comment      00000059  00000000  00000000  0002045d  2**0
+                  CONTENTS, READONLY
+  7 .debug_info   000049dd  00000000  00000000  000204b6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 00000cf4  00000000  00000000  00024e93  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000d78  00000000  00000000  00025b87  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_aranges 00000158  00000000  00000000  000268ff  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000118  00000000  00000000  00026a57  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_macro  00012a90  00000000  00000000  00026b6f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_line   00003275  00000000  00000000  000395ff  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_str    00055f3c  00000000  00000000  0003c874  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_frame  0000048c  00000000  00000000  000927b0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00080000 <exception_table>:
+   80000:	b8 08 00 20 01 04 08 00 fd 03 08 00 fd 03 08 00     ... ............
+   80010:	fd 03 08 00 fd 03 08 00 fd 03 08 00 00 00 00 00     ................
+	...
+   8002c:	fd 03 08 00 fd 03 08 00 00 00 00 00 fd 03 08 00     ................
+   8003c:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   8004c:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   8005c:	fd 03 08 00 9d 08 08 00 fd 03 08 00 00 00 00 00     ................
+   8006c:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+	...
+   80084:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   80094:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   800a4:	00 00 00 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   800b4:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   800c4:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   800d4:	fd 03 08 00 fd 03 08 00 fd 03 08 00 fd 03 08 00     ................
+   800e4:	fd 03 08 00 fd 03 08 00 49 03 08 00 fd 03 08 00     ........I.......
+
+000800f4 <__do_global_dtors_aux>:
+   800f4:	b510      	push	{r4, lr}
+   800f6:	4c05      	ldr	r4, [pc, #20]	; (8010c <__do_global_dtors_aux+0x18>)
+   800f8:	7823      	ldrb	r3, [r4, #0]
+   800fa:	b933      	cbnz	r3, 8010a <__do_global_dtors_aux+0x16>
+   800fc:	4b04      	ldr	r3, [pc, #16]	; (80110 <__do_global_dtors_aux+0x1c>)
+   800fe:	b113      	cbz	r3, 80106 <__do_global_dtors_aux+0x12>
+   80100:	4804      	ldr	r0, [pc, #16]	; (80114 <__do_global_dtors_aux+0x20>)
+   80102:	f3af 8000 	nop.w
+   80106:	2301      	movs	r3, #1
+   80108:	7023      	strb	r3, [r4, #0]
+   8010a:	bd10      	pop	{r4, pc}
+   8010c:	20000434 	.word	0x20000434
+   80110:	00000000 	.word	0x00000000
+   80114:	00080b24 	.word	0x00080b24
+
+00080118 <frame_dummy>:
+   80118:	4b0c      	ldr	r3, [pc, #48]	; (8014c <frame_dummy+0x34>)
+   8011a:	b143      	cbz	r3, 8012e <frame_dummy+0x16>
+   8011c:	480c      	ldr	r0, [pc, #48]	; (80150 <frame_dummy+0x38>)
+   8011e:	b510      	push	{r4, lr}
+   80120:	490c      	ldr	r1, [pc, #48]	; (80154 <frame_dummy+0x3c>)
+   80122:	f3af 8000 	nop.w
+   80126:	480c      	ldr	r0, [pc, #48]	; (80158 <frame_dummy+0x40>)
+   80128:	6803      	ldr	r3, [r0, #0]
+   8012a:	b923      	cbnz	r3, 80136 <frame_dummy+0x1e>
+   8012c:	bd10      	pop	{r4, pc}
+   8012e:	480a      	ldr	r0, [pc, #40]	; (80158 <frame_dummy+0x40>)
+   80130:	6803      	ldr	r3, [r0, #0]
+   80132:	b933      	cbnz	r3, 80142 <frame_dummy+0x2a>
+   80134:	4770      	bx	lr
+   80136:	4b09      	ldr	r3, [pc, #36]	; (8015c <frame_dummy+0x44>)
+   80138:	2b00      	cmp	r3, #0
+   8013a:	d0f7      	beq.n	8012c <frame_dummy+0x14>
+   8013c:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+   80140:	4718      	bx	r3
+   80142:	4b06      	ldr	r3, [pc, #24]	; (8015c <frame_dummy+0x44>)
+   80144:	2b00      	cmp	r3, #0
+   80146:	d0f5      	beq.n	80134 <frame_dummy+0x1c>
+   80148:	4718      	bx	r3
+   8014a:	bf00      	nop
+   8014c:	00000000 	.word	0x00000000
+   80150:	00080b24 	.word	0x00080b24
+   80154:	20000438 	.word	0x20000438
+   80158:	00080b24 	.word	0x00080b24
+   8015c:	00000000 	.word	0x00000000
+
+00080160 <can_init>:
+ * \retval Success(0) or failure(1)
+ */
+
+
+uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
+{
+   80160:	b4f0      	push	{r4, r5, r6, r7}
+	
+	//Make sure num_rx_mb and num_tx_mb is valid
+	if(num_rx_mb > 8 | num_tx_mb > 8 | num_rx_mb + num_tx_mb > 8)
+   80162:	1856      	adds	r6, r2, r1
+   80164:	2e08      	cmp	r6, #8
+   80166:	bfd4      	ite	le
+   80168:	2300      	movle	r3, #0
+   8016a:	2301      	movgt	r3, #1
+   8016c:	2908      	cmp	r1, #8
+   8016e:	bf98      	it	ls
+   80170:	2a08      	cmpls	r2, #8
+   80172:	d858      	bhi.n	80226 <can_init+0xc6>
+   80174:	460c      	mov	r4, r1
+   80176:	2b00      	cmp	r3, #0
+   80178:	d155      	bne.n	80226 <can_init+0xc6>
+
+
+	uint32_t ul_status; 
+	
+	//Disable can
+	CAN0->CAN_MR &= ~CAN_MR_CANEN; 
+   8017a:	4a2c      	ldr	r2, [pc, #176]	; (8022c <can_init+0xcc>)
+   8017c:	6813      	ldr	r3, [r2, #0]
+   8017e:	f023 0301 	bic.w	r3, r3, #1
+   80182:	6013      	str	r3, [r2, #0]
+	//Clear status register on read
+	ul_status = CAN0->CAN_SR; 
+   80184:	6913      	ldr	r3, [r2, #16]
+	
+	
+	// Disable interrupts on CANH and CANL pins
+	PIOA->PIO_IDR = PIO_PA8A_URXD | PIO_PA9A_UTXD;
+   80186:	4b2a      	ldr	r3, [pc, #168]	; (80230 <can_init+0xd0>)
+   80188:	f44f 7540 	mov.w	r5, #768	; 0x300
+   8018c:	645d      	str	r5, [r3, #68]	; 0x44
+	
+	//Select CAN0 RX and TX in PIOA
+	uint32_t ul_sr = PIOA->PIO_ABSR;
+   8018e:	6f1d      	ldr	r5, [r3, #112]	; 0x70
+	PIOA->PIO_ABSR = ~(PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0) & ul_sr;
+   80190:	f025 0503 	bic.w	r5, r5, #3
+   80194:	671d      	str	r5, [r3, #112]	; 0x70
+	
+	// Disable the Parallel IO (PIO) of the Rx and Tx pins so that the peripheral controller can use them
+	PIOA->PIO_PDR = PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0;
+   80196:	2503      	movs	r5, #3
+   80198:	605d      	str	r5, [r3, #4]
+	
+	// Enable pull up on CANH and CANL pin
+	PIOA->PIO_PUER = (PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0);
+   8019a:	665d      	str	r5, [r3, #100]	; 0x64
+	
+	
+	//Enable Clock for CAN0 in PMC
+	PMC->PMC_PCR = PMC_PCR_EN | (0 << PMC_PCR_DIV_Pos) | PMC_PCR_CMD | (ID_CAN0 << PMC_PCR_PID_Pos); // DIV = 1(can clk = MCK/2), CMD = 1 (write), PID = 2B (CAN0)
+   8019c:	f5a3 6300 	sub.w	r3, r3, #2048	; 0x800
+   801a0:	4d24      	ldr	r5, [pc, #144]	; (80234 <can_init+0xd4>)
+   801a2:	f8c3 510c 	str.w	r5, [r3, #268]	; 0x10c
+	PMC->PMC_PCER1 |= 1 << (ID_CAN0 - 32);
+   801a6:	f8d3 5100 	ldr.w	r5, [r3, #256]	; 0x100
+   801aa:	f445 6500 	orr.w	r5, r5, #2048	; 0x800
+   801ae:	f8c3 5100 	str.w	r5, [r3, #256]	; 0x100
+	// SJW = 3TQ, BRP = 3, TQ = 8/Fosc, PROPSEG = 2/TQ, PS1 = 8/TQ, SAMPLE 3, PS2 = 8/TQ
+	// TQ_NODE_1 = 8/ 16 Mhz, TQ_NODE_2 = 41+1 / 84 MHZ
+	//                ???????1 ?0101001 ??10?001  ?111?111
+	// can_br = 0b1 00101001 00100001 01110111
+	// can_br = 0x1292177
+	CAN0->CAN_BR = can_br; 
+   801b2:	6150      	str	r0, [r2, #20]
+	
+
+	/****** Start of mailbox configuration ******/
+
+	uint32_t can_ier = 0;
+   801b4:	2000      	movs	r0, #0
+
+	/* Configure receive mailboxes */
+	for (int n = num_tx_mb; n <= num_rx_mb + num_tx_mb; n++)  //Simply one mailbox setup for all messages. You might want to apply filter for them.
+   801b6:	e015      	b.n	801e4 <can_init+0x84>
+	{
+		CAN0->CAN_MB[n].CAN_MAM = 0x1F83FFFF; //Accept messages with id < 31
+   801b8:	4b1c      	ldr	r3, [pc, #112]	; (8022c <can_init+0xcc>)
+   801ba:	f101 0210 	add.w	r2, r1, #16
+   801be:	0152      	lsls	r2, r2, #5
+   801c0:	189d      	adds	r5, r3, r2
+   801c2:	4f1d      	ldr	r7, [pc, #116]	; (80238 <can_init+0xd8>)
+   801c4:	606f      	str	r7, [r5, #4]
+		//CAN0->CAN_MB[n].CAN_MAM = 0x00;
+		//CAN0->CAN_MB[n].CAN_MID = CAN_MID_MIDE;
+		CAN0->CAN_MB[n].CAN_MMR = (CAN_MMR_MOT_MB_RX);
+   801c6:	f04f 7580 	mov.w	r5, #16777216	; 0x1000000
+   801ca:	509d      	str	r5, [r3, r2]
+		CAN0->CAN_MB[n].CAN_MCR |= CAN_MCR_MTCR;
+   801cc:	eb03 1341 	add.w	r3, r3, r1, lsl #5
+   801d0:	f8d3 221c 	ldr.w	r2, [r3, #540]	; 0x21c
+   801d4:	f442 0200 	orr.w	r2, r2, #8388608	; 0x800000
+   801d8:	f8c3 221c 	str.w	r2, [r3, #540]	; 0x21c
+
+		can_ier |= 1 << n; //Enable interrupt on rx mailbox
+   801dc:	2301      	movs	r3, #1
+   801de:	408b      	lsls	r3, r1
+   801e0:	4318      	orrs	r0, r3
+	for (int n = num_tx_mb; n <= num_rx_mb + num_tx_mb; n++)  //Simply one mailbox setup for all messages. You might want to apply filter for them.
+   801e2:	3101      	adds	r1, #1
+   801e4:	42b1      	cmp	r1, r6
+   801e6:	dde7      	ble.n	801b8 <can_init+0x58>
+   801e8:	2300      	movs	r3, #0
+   801ea:	e00d      	b.n	80208 <can_init+0xa8>
+	}
+	
+	/*Configure transmit mailboxes */
+	for (int n = 0; n < num_tx_mb; n++)
+	{
+		CAN0->CAN_MB[n].CAN_MID = CAN_MID_MIDE;
+   801ec:	490f      	ldr	r1, [pc, #60]	; (8022c <can_init+0xcc>)
+   801ee:	eb01 1243 	add.w	r2, r1, r3, lsl #5
+   801f2:	f04f 5500 	mov.w	r5, #536870912	; 0x20000000
+   801f6:	f8c2 5208 	str.w	r5, [r2, #520]	; 0x208
+		CAN0->CAN_MB[n].CAN_MMR = (CAN_MMR_MOT_MB_TX);
+   801fa:	f103 0210 	add.w	r2, r3, #16
+   801fe:	0152      	lsls	r2, r2, #5
+   80200:	f04f 7540 	mov.w	r5, #50331648	; 0x3000000
+   80204:	508d      	str	r5, [r1, r2]
+	for (int n = 0; n < num_tx_mb; n++)
+   80206:	3301      	adds	r3, #1
+   80208:	42a3      	cmp	r3, r4
+   8020a:	dbef      	blt.n	801ec <can_init+0x8c>
+	}
+	
+	/****** End of mailbox configuraion ******/
+
+	//Enable interrupt on receive mailboxes
+	CAN0->CAN_IER = can_ier;
+   8020c:	4b07      	ldr	r3, [pc, #28]	; (8022c <can_init+0xcc>)
+   8020e:	6058      	str	r0, [r3, #4]
+ */
+__STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
+{
+  if ((int32_t)(IRQn) >= 0)
+  {
+    NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+   80210:	f44f 6100 	mov.w	r1, #2048	; 0x800
+   80214:	4a09      	ldr	r2, [pc, #36]	; (8023c <can_init+0xdc>)
+   80216:	6051      	str	r1, [r2, #4]
+
+	//Enable interrupt in NVIC 
+	NVIC_EnableIRQ(ID_CAN0);
+
+	//enable CAN
+	CAN0->CAN_MR |= CAN_MR_CANEN;
+   80218:	681a      	ldr	r2, [r3, #0]
+   8021a:	f042 0201 	orr.w	r2, r2, #1
+   8021e:	601a      	str	r2, [r3, #0]
+
+	return 0;
+   80220:	2000      	movs	r0, #0
+}
+   80222:	bcf0      	pop	{r4, r5, r6, r7}
+   80224:	4770      	bx	lr
+		return 1; //Too many mailboxes is configured
+   80226:	2001      	movs	r0, #1
+   80228:	e7fb      	b.n	80222 <can_init+0xc2>
+   8022a:	bf00      	nop
+   8022c:	400b4000 	.word	0x400b4000
+   80230:	400e0e00 	.word	0x400e0e00
+   80234:	1000102b 	.word	0x1000102b
+   80238:	1f83ffff 	.word	0x1f83ffff
+   8023c:	e000e100 	.word	0xe000e100
+
+00080240 <can_send>:
+ * \retval Success(0) or failure(1)
+ */
+uint8_t can_send(CAN_MESSAGE* can_msg, uint8_t tx_mb_id)
+{
+	//Check that mailbox is ready
+	if(CAN0->CAN_MB[tx_mb_id].CAN_MSR & CAN_MSR_MRDY)
+   80240:	014b      	lsls	r3, r1, #5
+   80242:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
+   80246:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
+   8024a:	f8d3 3210 	ldr.w	r3, [r3, #528]	; 0x210
+   8024e:	f413 0f00 	tst.w	r3, #8388608	; 0x800000
+   80252:	d034      	beq.n	802be <can_send+0x7e>
+	{
+		//Set message ID and use CAN 2.0B protocol
+		CAN0->CAN_MB[tx_mb_id].CAN_MID = CAN_MID_MIDvA(can_msg->id) | CAN_MID_MIDE ;
+   80254:	7802      	ldrb	r2, [r0, #0]
+   80256:	0492      	lsls	r2, r2, #18
+   80258:	f042 5200 	orr.w	r2, r2, #536870912	; 0x20000000
+   8025c:	014b      	lsls	r3, r1, #5
+   8025e:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
+   80262:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
+   80266:	f8c3 2208 	str.w	r2, [r3, #520]	; 0x208
+		
+		//Make sure message is not to long
+		if(can_msg->data_length > 8){
+   8026a:	7843      	ldrb	r3, [r0, #1]
+   8026c:	2b08      	cmp	r3, #8
+   8026e:	d901      	bls.n	80274 <can_send+0x34>
+			can_msg->data_length = 8;
+   80270:	2308      	movs	r3, #8
+   80272:	7043      	strb	r3, [r0, #1]
+			//Message is to long, sending only the first 8 bytes
+		}
+		//Put message in can data registers
+		CAN0->CAN_MB[tx_mb_id].CAN_MDL = can_msg->data[3] << 24 | can_msg->data[2] << 16 | can_msg->data[1] << 8 | can_msg->data[0];
+   80274:	7942      	ldrb	r2, [r0, #5]
+   80276:	7903      	ldrb	r3, [r0, #4]
+   80278:	041b      	lsls	r3, r3, #16
+   8027a:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+   8027e:	78c2      	ldrb	r2, [r0, #3]
+   80280:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+   80284:	7882      	ldrb	r2, [r0, #2]
+   80286:	4313      	orrs	r3, r2
+   80288:	0149      	lsls	r1, r1, #5
+   8028a:	f101 2140 	add.w	r1, r1, #1073758208	; 0x40004000
+   8028e:	f501 2130 	add.w	r1, r1, #720896	; 0xb0000
+   80292:	f8c1 3214 	str.w	r3, [r1, #532]	; 0x214
+		CAN0->CAN_MB[tx_mb_id].CAN_MDH = can_msg->data[7] << 24 | can_msg->data[6] << 16 | can_msg->data[5] << 8 | can_msg->data[4];
+   80296:	7a42      	ldrb	r2, [r0, #9]
+   80298:	7a03      	ldrb	r3, [r0, #8]
+   8029a:	041b      	lsls	r3, r3, #16
+   8029c:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+   802a0:	79c2      	ldrb	r2, [r0, #7]
+   802a2:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+   802a6:	7982      	ldrb	r2, [r0, #6]
+   802a8:	4313      	orrs	r3, r2
+   802aa:	f8c1 3218 	str.w	r3, [r1, #536]	; 0x218
+		
+		//Set message length and mailbox ready to send
+		CAN0->CAN_MB[tx_mb_id].CAN_MCR = (can_msg->data_length << CAN_MCR_MDLC_Pos) | CAN_MCR_MTCR;
+   802ae:	7843      	ldrb	r3, [r0, #1]
+   802b0:	041b      	lsls	r3, r3, #16
+   802b2:	f443 0300 	orr.w	r3, r3, #8388608	; 0x800000
+   802b6:	f8c1 321c 	str.w	r3, [r1, #540]	; 0x21c
+		return 0;
+   802ba:	2000      	movs	r0, #0
+   802bc:	4770      	bx	lr
+	}
+	
+	else //Mailbox busy
+	{
+		return 1;
+   802be:	2001      	movs	r0, #1
+	}
+	
+}
+   802c0:	4770      	bx	lr
+	...
+
+000802c4 <can_receive>:
+ * \retval Success(0) or failure(1)
+ */
+uint8_t can_receive(CAN_MESSAGE* can_msg, uint8_t rx_mb_id)
+{
+	//Check that mailbox is ready
+	if(CAN0->CAN_MB[rx_mb_id].CAN_MSR & CAN_MSR_MRDY)
+   802c4:	014b      	lsls	r3, r1, #5
+   802c6:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
+   802ca:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
+   802ce:	f8d3 3210 	ldr.w	r3, [r3, #528]	; 0x210
+   802d2:	f413 0f00 	tst.w	r3, #8388608	; 0x800000
+   802d6:	d033      	beq.n	80340 <can_receive+0x7c>
+{
+   802d8:	b470      	push	{r4, r5, r6}
+	{
+		//Get data from CAN mailbox
+		uint32_t data_low = CAN0->CAN_MB[rx_mb_id].CAN_MDL;
+   802da:	014b      	lsls	r3, r1, #5
+   802dc:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
+   802e0:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
+   802e4:	f8d3 4214 	ldr.w	r4, [r3, #532]	; 0x214
+		uint32_t data_high = CAN0->CAN_MB[rx_mb_id].CAN_MDH;
+   802e8:	f8d3 2218 	ldr.w	r2, [r3, #536]	; 0x218
+		
+		//Get message ID
+		can_msg->id = (uint8_t)((CAN0->CAN_MB[rx_mb_id].CAN_MID & CAN_MID_MIDvA_Msk) >> CAN_MID_MIDvA_Pos);
+   802ec:	f8d3 5208 	ldr.w	r5, [r3, #520]	; 0x208
+   802f0:	f3c5 4587 	ubfx	r5, r5, #18, #8
+   802f4:	7005      	strb	r5, [r0, #0]
+		
+		//Get data length
+		can_msg->data_length = (uint8_t)((CAN0->CAN_MB[rx_mb_id].CAN_MSR & CAN_MSR_MDLC_Msk) >> CAN_MSR_MDLC_Pos);
+   802f6:	f8d3 5210 	ldr.w	r5, [r3, #528]	; 0x210
+   802fa:	f3c5 4503 	ubfx	r5, r5, #16, #4
+   802fe:	7045      	strb	r5, [r0, #1]
+		
+		//Put data in CAN_MESSAGE object
+		for(int i = 0; i < can_msg->data_length;i++)
+   80300:	2300      	movs	r3, #0
+   80302:	e003      	b.n	8030c <can_receive+0x48>
+				can_msg->data[i] = (char)(data_low & 0xff);
+				data_low = data_low >> 8;
+			}
+			else
+			{
+				can_msg->data[i] = (uint8_t)(data_high & 0xff);
+   80304:	18c6      	adds	r6, r0, r3
+   80306:	70b2      	strb	r2, [r6, #2]
+				data_high = data_high >> 8;
+   80308:	0a12      	lsrs	r2, r2, #8
+		for(int i = 0; i < can_msg->data_length;i++)
+   8030a:	3301      	adds	r3, #1
+   8030c:	42ab      	cmp	r3, r5
+   8030e:	da05      	bge.n	8031c <can_receive+0x58>
+			if(i < 4)
+   80310:	2b03      	cmp	r3, #3
+   80312:	dcf7      	bgt.n	80304 <can_receive+0x40>
+				can_msg->data[i] = (char)(data_low & 0xff);
+   80314:	18c6      	adds	r6, r0, r3
+   80316:	70b4      	strb	r4, [r6, #2]
+				data_low = data_low >> 8;
+   80318:	0a24      	lsrs	r4, r4, #8
+   8031a:	e7f6      	b.n	8030a <can_receive+0x46>
+			}
+		}
+		
+		//Reset for new receive
+		CAN0->CAN_MB[rx_mb_id].CAN_MMR = CAN_MMR_MOT_MB_RX;
+   8031c:	4b09      	ldr	r3, [pc, #36]	; (80344 <can_receive+0x80>)
+   8031e:	f101 0210 	add.w	r2, r1, #16
+   80322:	0152      	lsls	r2, r2, #5
+   80324:	f04f 7080 	mov.w	r0, #16777216	; 0x1000000
+   80328:	5098      	str	r0, [r3, r2]
+		CAN0->CAN_MB[rx_mb_id].CAN_MCR |= CAN_MCR_MTCR;
+   8032a:	eb03 1141 	add.w	r1, r3, r1, lsl #5
+   8032e:	f8d1 321c 	ldr.w	r3, [r1, #540]	; 0x21c
+   80332:	f443 0300 	orr.w	r3, r3, #8388608	; 0x800000
+   80336:	f8c1 321c 	str.w	r3, [r1, #540]	; 0x21c
+		return 0;
+   8033a:	2000      	movs	r0, #0
+	}
+	else //Mailbox busy
+	{
+		return 1;
+	}
+}
+   8033c:	bc70      	pop	{r4, r5, r6}
+   8033e:	4770      	bx	lr
+		return 1;
+   80340:	2001      	movs	r0, #1
+   80342:	4770      	bx	lr
+   80344:	400b4000 	.word	0x400b4000
+
+00080348 <CAN0_Handler>:
+ * \param void
+ *
+ * \retval 
+ */
+void CAN0_Handler( void )
+{
+   80348:	b530      	push	{r4, r5, lr}
+   8034a:	b085      	sub	sp, #20
+	//if(DEBUG_INTERRUPT)printf("CAN0 interrupt\n\r");
+	char can_sr = CAN0->CAN_SR; 
+   8034c:	4b21      	ldr	r3, [pc, #132]	; (803d4 <CAN0_Handler+0x8c>)
+   8034e:	691d      	ldr	r5, [r3, #16]
+	
+	//RX interrupt
+	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2) )//Only mailbox 1 and 2 specified for receiving
+   80350:	f015 0f06 	tst.w	r5, #6
+   80354:	d030      	beq.n	803b8 <CAN0_Handler+0x70>
+	{
+		CAN_MESSAGE message;
+		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
+   80356:	f015 0f02 	tst.w	r5, #2
+   8035a:	d111      	bne.n	80380 <CAN0_Handler+0x38>
+		{
+			can_receive(&message, 1);
+
+		}
+		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
+   8035c:	f015 0f04 	tst.w	r5, #4
+   80360:	d013      	beq.n	8038a <CAN0_Handler+0x42>
+		
+		{
+			can_receive(&message, 2);
+   80362:	2102      	movs	r1, #2
+   80364:	a801      	add	r0, sp, #4
+   80366:	4b1c      	ldr	r3, [pc, #112]	; (803d8 <CAN0_Handler+0x90>)
+   80368:	4798      	blx	r3
+		else
+		{
+			printf("CAN0 message arrived in non-used mailbox\n\r");
+		}
+
+		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
+   8036a:	f89d 1004 	ldrb.w	r1, [sp, #4]
+   8036e:	481b      	ldr	r0, [pc, #108]	; (803dc <CAN0_Handler+0x94>)
+   80370:	4c1b      	ldr	r4, [pc, #108]	; (803e0 <CAN0_Handler+0x98>)
+   80372:	47a0      	blx	r4
+		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
+   80374:	f89d 1005 	ldrb.w	r1, [sp, #5]
+   80378:	481a      	ldr	r0, [pc, #104]	; (803e4 <CAN0_Handler+0x9c>)
+   8037a:	47a0      	blx	r4
+			if (message.data[2] > 100){
+				message.data[2] -= 255;
+				}
+			}
+		*/
+		for (int i = 0; i < message.data_length; i++)
+   8037c:	2400      	movs	r4, #0
+   8037e:	e010      	b.n	803a2 <CAN0_Handler+0x5a>
+			can_receive(&message, 1);
+   80380:	2101      	movs	r1, #1
+   80382:	a801      	add	r0, sp, #4
+   80384:	4b14      	ldr	r3, [pc, #80]	; (803d8 <CAN0_Handler+0x90>)
+   80386:	4798      	blx	r3
+   80388:	e7ef      	b.n	8036a <CAN0_Handler+0x22>
+			printf("CAN0 message arrived in non-used mailbox\n\r");
+   8038a:	4817      	ldr	r0, [pc, #92]	; (803e8 <CAN0_Handler+0xa0>)
+   8038c:	4b14      	ldr	r3, [pc, #80]	; (803e0 <CAN0_Handler+0x98>)
+   8038e:	4798      	blx	r3
+   80390:	e7eb      	b.n	8036a <CAN0_Handler+0x22>
+		{
+			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
+   80392:	ab04      	add	r3, sp, #16
+   80394:	4423      	add	r3, r4
+   80396:	f813 1c0a 	ldrb.w	r1, [r3, #-10]
+   8039a:	4814      	ldr	r0, [pc, #80]	; (803ec <CAN0_Handler+0xa4>)
+   8039c:	4b10      	ldr	r3, [pc, #64]	; (803e0 <CAN0_Handler+0x98>)
+   8039e:	4798      	blx	r3
+		for (int i = 0; i < message.data_length; i++)
+   803a0:	3401      	adds	r4, #1
+   803a2:	f89d 3005 	ldrb.w	r3, [sp, #5]
+   803a6:	429c      	cmp	r4, r3
+   803a8:	dbf3      	blt.n	80392 <CAN0_Handler+0x4a>
+		}
+		can_send(&message, 0);
+   803aa:	2100      	movs	r1, #0
+   803ac:	a801      	add	r0, sp, #4
+   803ae:	4b10      	ldr	r3, [pc, #64]	; (803f0 <CAN0_Handler+0xa8>)
+   803b0:	4798      	blx	r3
+		if(DEBUG_INTERRUPT)printf("\n\r");
+   803b2:	4810      	ldr	r0, [pc, #64]	; (803f4 <CAN0_Handler+0xac>)
+   803b4:	4b0a      	ldr	r3, [pc, #40]	; (803e0 <CAN0_Handler+0x98>)
+   803b6:	4798      	blx	r3
+	}
+	
+	if(can_sr & CAN_SR_MB0)
+   803b8:	f015 0f01 	tst.w	r5, #1
+   803bc:	d002      	beq.n	803c4 <CAN0_Handler+0x7c>
+	{
+		//if(DEBUG_INTERRUPT) printf("CAN0 MB0 ready to send \n\r");
+		
+	//Disable interrupt
+		CAN0->CAN_IDR = CAN_IER_MB0;
+   803be:	2201      	movs	r2, #1
+   803c0:	4b04      	ldr	r3, [pc, #16]	; (803d4 <CAN0_Handler+0x8c>)
+   803c2:	609a      	str	r2, [r3, #8]
+ */
+__STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+{
+  if ((int32_t)(IRQn) >= 0)
+  {
+    NVIC->ICPR[(((uint32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+   803c4:	f44f 6200 	mov.w	r2, #2048	; 0x800
+   803c8:	4b0b      	ldr	r3, [pc, #44]	; (803f8 <CAN0_Handler+0xb0>)
+   803ca:	f8c3 2184 	str.w	r2, [r3, #388]	; 0x184
+
+	}
+	
+	NVIC_ClearPendingIRQ(ID_CAN0);
+	//sei();*/
+}
+   803ce:	b005      	add	sp, #20
+   803d0:	bd30      	pop	{r4, r5, pc}
+   803d2:	bf00      	nop
+   803d4:	400b4000 	.word	0x400b4000
+   803d8:	000802c5 	.word	0x000802c5
+   803dc:	00080aa0 	.word	0x00080aa0
+   803e0:	000807ed 	.word	0x000807ed
+   803e4:	00080ab4 	.word	0x00080ab4
+   803e8:	00080a74 	.word	0x00080a74
+   803ec:	00080ad0 	.word	0x00080ad0
+   803f0:	00080241 	.word	0x00080241
+   803f4:	00080a9c 	.word	0x00080a9c
+   803f8:	e000e100 	.word	0xe000e100
+
+000803fc <Dummy_Handler>:
+   803fc:	e7fe      	b.n	803fc <Dummy_Handler>
+	...
+
+00080400 <Reset_Handler>:
+   80400:	b508      	push	{r3, lr}
+   80402:	4b11      	ldr	r3, [pc, #68]	; (80448 <Reset_Handler+0x48>)
+   80404:	4a11      	ldr	r2, [pc, #68]	; (8044c <Reset_Handler+0x4c>)
+   80406:	429a      	cmp	r2, r3
+   80408:	d009      	beq.n	8041e <Reset_Handler+0x1e>
+   8040a:	4b0f      	ldr	r3, [pc, #60]	; (80448 <Reset_Handler+0x48>)
+   8040c:	4a0f      	ldr	r2, [pc, #60]	; (8044c <Reset_Handler+0x4c>)
+   8040e:	e003      	b.n	80418 <Reset_Handler+0x18>
+   80410:	6811      	ldr	r1, [r2, #0]
+   80412:	6019      	str	r1, [r3, #0]
+   80414:	3304      	adds	r3, #4
+   80416:	3204      	adds	r2, #4
+   80418:	490d      	ldr	r1, [pc, #52]	; (80450 <Reset_Handler+0x50>)
+   8041a:	428b      	cmp	r3, r1
+   8041c:	d3f8      	bcc.n	80410 <Reset_Handler+0x10>
+   8041e:	4b0d      	ldr	r3, [pc, #52]	; (80454 <Reset_Handler+0x54>)
+   80420:	e002      	b.n	80428 <Reset_Handler+0x28>
+   80422:	2200      	movs	r2, #0
+   80424:	601a      	str	r2, [r3, #0]
+   80426:	3304      	adds	r3, #4
+   80428:	4a0b      	ldr	r2, [pc, #44]	; (80458 <Reset_Handler+0x58>)
+   8042a:	4293      	cmp	r3, r2
+   8042c:	d3f9      	bcc.n	80422 <Reset_Handler+0x22>
+   8042e:	4b0b      	ldr	r3, [pc, #44]	; (8045c <Reset_Handler+0x5c>)
+   80430:	f023 4360 	bic.w	r3, r3, #3758096384	; 0xe0000000
+   80434:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+   80438:	4a09      	ldr	r2, [pc, #36]	; (80460 <Reset_Handler+0x60>)
+   8043a:	6093      	str	r3, [r2, #8]
+   8043c:	4b09      	ldr	r3, [pc, #36]	; (80464 <Reset_Handler+0x64>)
+   8043e:	4798      	blx	r3
+   80440:	4b09      	ldr	r3, [pc, #36]	; (80468 <Reset_Handler+0x68>)
+   80442:	4798      	blx	r3
+   80444:	e7fe      	b.n	80444 <Reset_Handler+0x44>
+   80446:	bf00      	nop
+   80448:	20000000 	.word	0x20000000
+   8044c:	00080b24 	.word	0x00080b24
+   80450:	20000434 	.word	0x20000434
+   80454:	20000434 	.word	0x20000434
+   80458:	200004b8 	.word	0x200004b8
+   8045c:	00080000 	.word	0x00080000
+   80460:	e000ed00 	.word	0xe000ed00
+   80464:	00080905 	.word	0x00080905
+   80468:	00080511 	.word	0x00080511
+
+0008046c <SystemInit>:
+   8046c:	f44f 6380 	mov.w	r3, #1024	; 0x400
+   80470:	4a20      	ldr	r2, [pc, #128]	; (804f4 <SystemInit+0x88>)
+   80472:	6013      	str	r3, [r2, #0]
+   80474:	f502 7200 	add.w	r2, r2, #512	; 0x200
+   80478:	6013      	str	r3, [r2, #0]
+   8047a:	4b1f      	ldr	r3, [pc, #124]	; (804f8 <SystemInit+0x8c>)
+   8047c:	6a1b      	ldr	r3, [r3, #32]
+   8047e:	f013 7f80 	tst.w	r3, #16777216	; 0x1000000
+   80482:	d107      	bne.n	80494 <SystemInit+0x28>
+   80484:	4a1d      	ldr	r2, [pc, #116]	; (804fc <SystemInit+0x90>)
+   80486:	4b1c      	ldr	r3, [pc, #112]	; (804f8 <SystemInit+0x8c>)
+   80488:	621a      	str	r2, [r3, #32]
+   8048a:	4b1b      	ldr	r3, [pc, #108]	; (804f8 <SystemInit+0x8c>)
+   8048c:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   8048e:	f013 0f01 	tst.w	r3, #1
+   80492:	d0fa      	beq.n	8048a <SystemInit+0x1e>
+   80494:	4a1a      	ldr	r2, [pc, #104]	; (80500 <SystemInit+0x94>)
+   80496:	4b18      	ldr	r3, [pc, #96]	; (804f8 <SystemInit+0x8c>)
+   80498:	621a      	str	r2, [r3, #32]
+   8049a:	4b17      	ldr	r3, [pc, #92]	; (804f8 <SystemInit+0x8c>)
+   8049c:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   8049e:	f413 3f80 	tst.w	r3, #65536	; 0x10000
+   804a2:	d0fa      	beq.n	8049a <SystemInit+0x2e>
+   804a4:	4a14      	ldr	r2, [pc, #80]	; (804f8 <SystemInit+0x8c>)
+   804a6:	6b13      	ldr	r3, [r2, #48]	; 0x30
+   804a8:	f023 0303 	bic.w	r3, r3, #3
+   804ac:	f043 0301 	orr.w	r3, r3, #1
+   804b0:	6313      	str	r3, [r2, #48]	; 0x30
+   804b2:	4b11      	ldr	r3, [pc, #68]	; (804f8 <SystemInit+0x8c>)
+   804b4:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   804b6:	f013 0f08 	tst.w	r3, #8
+   804ba:	d0fa      	beq.n	804b2 <SystemInit+0x46>
+   804bc:	4a11      	ldr	r2, [pc, #68]	; (80504 <SystemInit+0x98>)
+   804be:	4b0e      	ldr	r3, [pc, #56]	; (804f8 <SystemInit+0x8c>)
+   804c0:	629a      	str	r2, [r3, #40]	; 0x28
+   804c2:	4b0d      	ldr	r3, [pc, #52]	; (804f8 <SystemInit+0x8c>)
+   804c4:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   804c6:	f013 0f02 	tst.w	r3, #2
+   804ca:	d0fa      	beq.n	804c2 <SystemInit+0x56>
+   804cc:	2211      	movs	r2, #17
+   804ce:	4b0a      	ldr	r3, [pc, #40]	; (804f8 <SystemInit+0x8c>)
+   804d0:	631a      	str	r2, [r3, #48]	; 0x30
+   804d2:	4b09      	ldr	r3, [pc, #36]	; (804f8 <SystemInit+0x8c>)
+   804d4:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   804d6:	f013 0f08 	tst.w	r3, #8
+   804da:	d0fa      	beq.n	804d2 <SystemInit+0x66>
+   804dc:	2212      	movs	r2, #18
+   804de:	4b06      	ldr	r3, [pc, #24]	; (804f8 <SystemInit+0x8c>)
+   804e0:	631a      	str	r2, [r3, #48]	; 0x30
+   804e2:	4b05      	ldr	r3, [pc, #20]	; (804f8 <SystemInit+0x8c>)
+   804e4:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+   804e6:	f013 0f08 	tst.w	r3, #8
+   804ea:	d0fa      	beq.n	804e2 <SystemInit+0x76>
+   804ec:	4a06      	ldr	r2, [pc, #24]	; (80508 <SystemInit+0x9c>)
+   804ee:	4b07      	ldr	r3, [pc, #28]	; (8050c <SystemInit+0xa0>)
+   804f0:	601a      	str	r2, [r3, #0]
+   804f2:	4770      	bx	lr
+   804f4:	400e0a00 	.word	0x400e0a00
+   804f8:	400e0600 	.word	0x400e0600
+   804fc:	00370809 	.word	0x00370809
+   80500:	01370809 	.word	0x01370809
+   80504:	200d3f01 	.word	0x200d3f01
+   80508:	0501bd00 	.word	0x0501bd00
+   8050c:	20000000 	.word	0x20000000
+
+00080510 <main>:
+
+
+
+
+int main(void)
+{
+   80510:	b508      	push	{r3, lr}
+    /* Initialize the SAM system */
+    SystemInit();
+   80512:	4b0c      	ldr	r3, [pc, #48]	; (80544 <main+0x34>)
+   80514:	4798      	blx	r3
+	
+	
+	
+	
+	configure_uart(); //STARTS THE UART
+   80516:	4b0c      	ldr	r3, [pc, #48]	; (80548 <main+0x38>)
+   80518:	4798      	blx	r3
+	
+	can_init(0x1292177,1,2);
+   8051a:	2202      	movs	r2, #2
+   8051c:	2101      	movs	r1, #1
+   8051e:	480b      	ldr	r0, [pc, #44]	; (8054c <main+0x3c>)
+   80520:	4b0b      	ldr	r3, [pc, #44]	; (80550 <main+0x40>)
+   80522:	4798      	blx	r3
+	
+	WDT->WDT_MR = WDT_MR_WDDIS; //DISABLES THE WATCHDOG
+   80524:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+   80528:	4b0a      	ldr	r3, [pc, #40]	; (80554 <main+0x44>)
+   8052a:	605a      	str	r2, [r3, #4]
+	
+	PIOA->PIO_PER = PIO_PA19 | PIO_PA20; // PIN I/O SELECT
+   8052c:	f5a3 6345 	sub.w	r3, r3, #3152	; 0xc50
+   80530:	f44f 12c0 	mov.w	r2, #1572864	; 0x180000
+   80534:	601a      	str	r2, [r3, #0]
+	PIOA->PIO_OER = PIO_PA19 | PIO_PA20; // PIN OUTPUT SELECT
+   80536:	611a      	str	r2, [r3, #16]
+	
+	PIOA->PIO_SODR = PIO_PA19; //PIN SET OUTPUT DATA REGISTER
+   80538:	f44f 2200 	mov.w	r2, #524288	; 0x80000
+   8053c:	631a      	str	r2, [r3, #48]	; 0x30
+	
+	int i = 1;
+	
+	while (1) 
+    {
+		CAN0_Handler();
+   8053e:	4b06      	ldr	r3, [pc, #24]	; (80558 <main+0x48>)
+   80540:	4798      	blx	r3
+   80542:	e7fc      	b.n	8053e <main+0x2e>
+   80544:	0008046d 	.word	0x0008046d
+   80548:	00080811 	.word	0x00080811
+   8054c:	01292177 	.word	0x01292177
+   80550:	00080161 	.word	0x00080161
+   80554:	400e1a50 	.word	0x400e1a50
+   80558:	00080349 	.word	0x00080349
+
+0008055c <printchar>:
+   8055c:	b508      	push	{r3, lr}
+   8055e:	b2c8      	uxtb	r0, r1
+   80560:	4b01      	ldr	r3, [pc, #4]	; (80568 <printchar+0xc>)
+   80562:	4798      	blx	r3
+   80564:	bd08      	pop	{r3, pc}
+   80566:	bf00      	nop
+   80568:	00080879 	.word	0x00080879
+
+0008056c <prints>:
+   8056c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+   80570:	4607      	mov	r7, r0
+   80572:	460e      	mov	r6, r1
+   80574:	1e15      	subs	r5, r2, #0
+   80576:	dd02      	ble.n	8057e <prints+0x12>
+   80578:	460a      	mov	r2, r1
+   8057a:	2100      	movs	r1, #0
+   8057c:	e004      	b.n	80588 <prints+0x1c>
+   8057e:	f04f 0820 	mov.w	r8, #32
+   80582:	e00e      	b.n	805a2 <prints+0x36>
+   80584:	3101      	adds	r1, #1
+   80586:	3201      	adds	r2, #1
+   80588:	7810      	ldrb	r0, [r2, #0]
+   8058a:	2800      	cmp	r0, #0
+   8058c:	d1fa      	bne.n	80584 <prints+0x18>
+   8058e:	42a9      	cmp	r1, r5
+   80590:	da01      	bge.n	80596 <prints+0x2a>
+   80592:	1a6d      	subs	r5, r5, r1
+   80594:	e000      	b.n	80598 <prints+0x2c>
+   80596:	2500      	movs	r5, #0
+   80598:	f013 0f02 	tst.w	r3, #2
+   8059c:	d106      	bne.n	805ac <prints+0x40>
+   8059e:	f04f 0820 	mov.w	r8, #32
+   805a2:	f013 0401 	ands.w	r4, r3, #1
+   805a6:	d00a      	beq.n	805be <prints+0x52>
+   805a8:	2400      	movs	r4, #0
+   805aa:	e010      	b.n	805ce <prints+0x62>
+   805ac:	f04f 0830 	mov.w	r8, #48	; 0x30
+   805b0:	e7f7      	b.n	805a2 <prints+0x36>
+   805b2:	4641      	mov	r1, r8
+   805b4:	4638      	mov	r0, r7
+   805b6:	4b0d      	ldr	r3, [pc, #52]	; (805ec <prints+0x80>)
+   805b8:	4798      	blx	r3
+   805ba:	3401      	adds	r4, #1
+   805bc:	3d01      	subs	r5, #1
+   805be:	2d00      	cmp	r5, #0
+   805c0:	dcf7      	bgt.n	805b2 <prints+0x46>
+   805c2:	e004      	b.n	805ce <prints+0x62>
+   805c4:	4638      	mov	r0, r7
+   805c6:	4b09      	ldr	r3, [pc, #36]	; (805ec <prints+0x80>)
+   805c8:	4798      	blx	r3
+   805ca:	3401      	adds	r4, #1
+   805cc:	3601      	adds	r6, #1
+   805ce:	7831      	ldrb	r1, [r6, #0]
+   805d0:	2900      	cmp	r1, #0
+   805d2:	d1f7      	bne.n	805c4 <prints+0x58>
+   805d4:	e005      	b.n	805e2 <prints+0x76>
+   805d6:	4641      	mov	r1, r8
+   805d8:	4638      	mov	r0, r7
+   805da:	4b04      	ldr	r3, [pc, #16]	; (805ec <prints+0x80>)
+   805dc:	4798      	blx	r3
+   805de:	3401      	adds	r4, #1
+   805e0:	3d01      	subs	r5, #1
+   805e2:	2d00      	cmp	r5, #0
+   805e4:	dcf7      	bgt.n	805d6 <prints+0x6a>
+   805e6:	4620      	mov	r0, r4
+   805e8:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+   805ec:	0008055d 	.word	0x0008055d
+
+000805f0 <printi>:
+   805f0:	b5f0      	push	{r4, r5, r6, r7, lr}
+   805f2:	b085      	sub	sp, #20
+   805f4:	4607      	mov	r7, r0
+   805f6:	980c      	ldr	r0, [sp, #48]	; 0x30
+   805f8:	b151      	cbz	r1, 80610 <printi+0x20>
+   805fa:	461e      	mov	r6, r3
+   805fc:	460c      	mov	r4, r1
+   805fe:	b113      	cbz	r3, 80606 <printi+0x16>
+   80600:	2a0a      	cmp	r2, #10
+   80602:	d012      	beq.n	8062a <printi+0x3a>
+   80604:	2600      	movs	r6, #0
+   80606:	ad04      	add	r5, sp, #16
+   80608:	2300      	movs	r3, #0
+   8060a:	f805 3d01 	strb.w	r3, [r5, #-1]!
+   8060e:	e018      	b.n	80642 <printi+0x52>
+   80610:	2330      	movs	r3, #48	; 0x30
+   80612:	f88d 3004 	strb.w	r3, [sp, #4]
+   80616:	2300      	movs	r3, #0
+   80618:	f88d 3005 	strb.w	r3, [sp, #5]
+   8061c:	9b0b      	ldr	r3, [sp, #44]	; 0x2c
+   8061e:	9a0a      	ldr	r2, [sp, #40]	; 0x28
+   80620:	a901      	add	r1, sp, #4
+   80622:	4638      	mov	r0, r7
+   80624:	4c1b      	ldr	r4, [pc, #108]	; (80694 <printi+0xa4>)
+   80626:	47a0      	blx	r4
+   80628:	e029      	b.n	8067e <printi+0x8e>
+   8062a:	2900      	cmp	r1, #0
+   8062c:	db01      	blt.n	80632 <printi+0x42>
+   8062e:	2600      	movs	r6, #0
+   80630:	e7e9      	b.n	80606 <printi+0x16>
+   80632:	424c      	negs	r4, r1
+   80634:	2601      	movs	r6, #1
+   80636:	e7e6      	b.n	80606 <printi+0x16>
+   80638:	3330      	adds	r3, #48	; 0x30
+   8063a:	f805 3d01 	strb.w	r3, [r5, #-1]!
+   8063e:	fbb4 f4f2 	udiv	r4, r4, r2
+   80642:	b14c      	cbz	r4, 80658 <printi+0x68>
+   80644:	fbb4 f3f2 	udiv	r3, r4, r2
+   80648:	fb02 4313 	mls	r3, r2, r3, r4
+   8064c:	2b09      	cmp	r3, #9
+   8064e:	ddf3      	ble.n	80638 <printi+0x48>
+   80650:	f1a0 013a 	sub.w	r1, r0, #58	; 0x3a
+   80654:	440b      	add	r3, r1
+   80656:	e7ef      	b.n	80638 <printi+0x48>
+   80658:	b156      	cbz	r6, 80670 <printi+0x80>
+   8065a:	9b0a      	ldr	r3, [sp, #40]	; 0x28
+   8065c:	b11b      	cbz	r3, 80666 <printi+0x76>
+   8065e:	9b0b      	ldr	r3, [sp, #44]	; 0x2c
+   80660:	f013 0f02 	tst.w	r3, #2
+   80664:	d10d      	bne.n	80682 <printi+0x92>
+   80666:	232d      	movs	r3, #45	; 0x2d
+   80668:	f805 3c01 	strb.w	r3, [r5, #-1]
+   8066c:	3d01      	subs	r5, #1
+   8066e:	2600      	movs	r6, #0
+   80670:	9b0b      	ldr	r3, [sp, #44]	; 0x2c
+   80672:	9a0a      	ldr	r2, [sp, #40]	; 0x28
+   80674:	4629      	mov	r1, r5
+   80676:	4638      	mov	r0, r7
+   80678:	4c06      	ldr	r4, [pc, #24]	; (80694 <printi+0xa4>)
+   8067a:	47a0      	blx	r4
+   8067c:	4430      	add	r0, r6
+   8067e:	b005      	add	sp, #20
+   80680:	bdf0      	pop	{r4, r5, r6, r7, pc}
+   80682:	212d      	movs	r1, #45	; 0x2d
+   80684:	4638      	mov	r0, r7
+   80686:	4b04      	ldr	r3, [pc, #16]	; (80698 <printi+0xa8>)
+   80688:	4798      	blx	r3
+   8068a:	9b0a      	ldr	r3, [sp, #40]	; 0x28
+   8068c:	3b01      	subs	r3, #1
+   8068e:	930a      	str	r3, [sp, #40]	; 0x28
+   80690:	e7ee      	b.n	80670 <printi+0x80>
+   80692:	bf00      	nop
+   80694:	0008056d 	.word	0x0008056d
+   80698:	0008055d 	.word	0x0008055d
+
+0008069c <print>:
+   8069c:	b5f0      	push	{r4, r5, r6, r7, lr}
+   8069e:	b089      	sub	sp, #36	; 0x24
+   806a0:	4606      	mov	r6, r0
+   806a2:	460c      	mov	r4, r1
+   806a4:	9205      	str	r2, [sp, #20]
+   806a6:	2500      	movs	r5, #0
+   806a8:	e081      	b.n	807ae <print+0x112>
+   806aa:	1ca2      	adds	r2, r4, #2
+   806ac:	2301      	movs	r3, #1
+   806ae:	e08b      	b.n	807c8 <print+0x12c>
+   806b0:	3401      	adds	r4, #1
+   806b2:	f043 0302 	orr.w	r3, r3, #2
+   806b6:	7822      	ldrb	r2, [r4, #0]
+   806b8:	2a30      	cmp	r2, #48	; 0x30
+   806ba:	d0f9      	beq.n	806b0 <print+0x14>
+   806bc:	2200      	movs	r2, #0
+   806be:	e006      	b.n	806ce <print+0x32>
+   806c0:	eb02 0282 	add.w	r2, r2, r2, lsl #2
+   806c4:	0050      	lsls	r0, r2, #1
+   806c6:	f1a1 0230 	sub.w	r2, r1, #48	; 0x30
+   806ca:	4402      	add	r2, r0
+   806cc:	3401      	adds	r4, #1
+   806ce:	7821      	ldrb	r1, [r4, #0]
+   806d0:	f1a1 0030 	sub.w	r0, r1, #48	; 0x30
+   806d4:	b2c0      	uxtb	r0, r0
+   806d6:	2809      	cmp	r0, #9
+   806d8:	d9f2      	bls.n	806c0 <print+0x24>
+   806da:	2973      	cmp	r1, #115	; 0x73
+   806dc:	d018      	beq.n	80710 <print+0x74>
+   806de:	2964      	cmp	r1, #100	; 0x64
+   806e0:	d022      	beq.n	80728 <print+0x8c>
+   806e2:	2978      	cmp	r1, #120	; 0x78
+   806e4:	d02f      	beq.n	80746 <print+0xaa>
+   806e6:	2958      	cmp	r1, #88	; 0x58
+   806e8:	d03c      	beq.n	80764 <print+0xc8>
+   806ea:	2975      	cmp	r1, #117	; 0x75
+   806ec:	d049      	beq.n	80782 <print+0xe6>
+   806ee:	2963      	cmp	r1, #99	; 0x63
+   806f0:	d15c      	bne.n	807ac <print+0x110>
+   806f2:	9905      	ldr	r1, [sp, #20]
+   806f4:	1d08      	adds	r0, r1, #4
+   806f6:	9005      	str	r0, [sp, #20]
+   806f8:	7809      	ldrb	r1, [r1, #0]
+   806fa:	f88d 101c 	strb.w	r1, [sp, #28]
+   806fe:	2100      	movs	r1, #0
+   80700:	f88d 101d 	strb.w	r1, [sp, #29]
+   80704:	a907      	add	r1, sp, #28
+   80706:	4630      	mov	r0, r6
+   80708:	4f34      	ldr	r7, [pc, #208]	; (807dc <print+0x140>)
+   8070a:	47b8      	blx	r7
+   8070c:	4405      	add	r5, r0
+   8070e:	e04d      	b.n	807ac <print+0x110>
+   80710:	9905      	ldr	r1, [sp, #20]
+   80712:	1d08      	adds	r0, r1, #4
+   80714:	9005      	str	r0, [sp, #20]
+   80716:	6809      	ldr	r1, [r1, #0]
+   80718:	b121      	cbz	r1, 80724 <print+0x88>
+   8071a:	4630      	mov	r0, r6
+   8071c:	4f2f      	ldr	r7, [pc, #188]	; (807dc <print+0x140>)
+   8071e:	47b8      	blx	r7
+   80720:	4405      	add	r5, r0
+   80722:	e043      	b.n	807ac <print+0x110>
+   80724:	492e      	ldr	r1, [pc, #184]	; (807e0 <print+0x144>)
+   80726:	e7f8      	b.n	8071a <print+0x7e>
+   80728:	9905      	ldr	r1, [sp, #20]
+   8072a:	1d08      	adds	r0, r1, #4
+   8072c:	9005      	str	r0, [sp, #20]
+   8072e:	6809      	ldr	r1, [r1, #0]
+   80730:	2061      	movs	r0, #97	; 0x61
+   80732:	9002      	str	r0, [sp, #8]
+   80734:	9301      	str	r3, [sp, #4]
+   80736:	9200      	str	r2, [sp, #0]
+   80738:	2301      	movs	r3, #1
+   8073a:	220a      	movs	r2, #10
+   8073c:	4630      	mov	r0, r6
+   8073e:	4f29      	ldr	r7, [pc, #164]	; (807e4 <print+0x148>)
+   80740:	47b8      	blx	r7
+   80742:	4405      	add	r5, r0
+   80744:	e032      	b.n	807ac <print+0x110>
+   80746:	9905      	ldr	r1, [sp, #20]
+   80748:	1d08      	adds	r0, r1, #4
+   8074a:	9005      	str	r0, [sp, #20]
+   8074c:	6809      	ldr	r1, [r1, #0]
+   8074e:	2061      	movs	r0, #97	; 0x61
+   80750:	9002      	str	r0, [sp, #8]
+   80752:	9301      	str	r3, [sp, #4]
+   80754:	9200      	str	r2, [sp, #0]
+   80756:	2300      	movs	r3, #0
+   80758:	2210      	movs	r2, #16
+   8075a:	4630      	mov	r0, r6
+   8075c:	4f21      	ldr	r7, [pc, #132]	; (807e4 <print+0x148>)
+   8075e:	47b8      	blx	r7
+   80760:	4405      	add	r5, r0
+   80762:	e023      	b.n	807ac <print+0x110>
+   80764:	9905      	ldr	r1, [sp, #20]
+   80766:	1d08      	adds	r0, r1, #4
+   80768:	9005      	str	r0, [sp, #20]
+   8076a:	6809      	ldr	r1, [r1, #0]
+   8076c:	2041      	movs	r0, #65	; 0x41
+   8076e:	9002      	str	r0, [sp, #8]
+   80770:	9301      	str	r3, [sp, #4]
+   80772:	9200      	str	r2, [sp, #0]
+   80774:	2300      	movs	r3, #0
+   80776:	2210      	movs	r2, #16
+   80778:	4630      	mov	r0, r6
+   8077a:	4f1a      	ldr	r7, [pc, #104]	; (807e4 <print+0x148>)
+   8077c:	47b8      	blx	r7
+   8077e:	4405      	add	r5, r0
+   80780:	e014      	b.n	807ac <print+0x110>
+   80782:	9905      	ldr	r1, [sp, #20]
+   80784:	1d08      	adds	r0, r1, #4
+   80786:	9005      	str	r0, [sp, #20]
+   80788:	6809      	ldr	r1, [r1, #0]
+   8078a:	2061      	movs	r0, #97	; 0x61
+   8078c:	9002      	str	r0, [sp, #8]
+   8078e:	9301      	str	r3, [sp, #4]
+   80790:	9200      	str	r2, [sp, #0]
+   80792:	2300      	movs	r3, #0
+   80794:	220a      	movs	r2, #10
+   80796:	4630      	mov	r0, r6
+   80798:	4f12      	ldr	r7, [pc, #72]	; (807e4 <print+0x148>)
+   8079a:	47b8      	blx	r7
+   8079c:	4405      	add	r5, r0
+   8079e:	e005      	b.n	807ac <print+0x110>
+   807a0:	4614      	mov	r4, r2
+   807a2:	7821      	ldrb	r1, [r4, #0]
+   807a4:	4630      	mov	r0, r6
+   807a6:	4b10      	ldr	r3, [pc, #64]	; (807e8 <print+0x14c>)
+   807a8:	4798      	blx	r3
+   807aa:	3501      	adds	r5, #1
+   807ac:	3401      	adds	r4, #1
+   807ae:	7823      	ldrb	r3, [r4, #0]
+   807b0:	b163      	cbz	r3, 807cc <print+0x130>
+   807b2:	2b25      	cmp	r3, #37	; 0x25
+   807b4:	d1f5      	bne.n	807a2 <print+0x106>
+   807b6:	1c62      	adds	r2, r4, #1
+   807b8:	7863      	ldrb	r3, [r4, #1]
+   807ba:	b13b      	cbz	r3, 807cc <print+0x130>
+   807bc:	2b25      	cmp	r3, #37	; 0x25
+   807be:	d0ef      	beq.n	807a0 <print+0x104>
+   807c0:	2b2d      	cmp	r3, #45	; 0x2d
+   807c2:	f43f af72 	beq.w	806aa <print+0xe>
+   807c6:	2300      	movs	r3, #0
+   807c8:	4614      	mov	r4, r2
+   807ca:	e774      	b.n	806b6 <print+0x1a>
+   807cc:	b116      	cbz	r6, 807d4 <print+0x138>
+   807ce:	6833      	ldr	r3, [r6, #0]
+   807d0:	2200      	movs	r2, #0
+   807d2:	701a      	strb	r2, [r3, #0]
+   807d4:	4628      	mov	r0, r5
+   807d6:	b009      	add	sp, #36	; 0x24
+   807d8:	bdf0      	pop	{r4, r5, r6, r7, pc}
+   807da:	bf00      	nop
+   807dc:	0008056d 	.word	0x0008056d
+   807e0:	00080ad4 	.word	0x00080ad4
+   807e4:	000805f1 	.word	0x000805f1
+   807e8:	0008055d 	.word	0x0008055d
+
+000807ec <printf>:
+   807ec:	b40f      	push	{r0, r1, r2, r3}
+   807ee:	b500      	push	{lr}
+   807f0:	b083      	sub	sp, #12
+   807f2:	aa04      	add	r2, sp, #16
+   807f4:	f852 1b04 	ldr.w	r1, [r2], #4
+   807f8:	9201      	str	r2, [sp, #4]
+   807fa:	2000      	movs	r0, #0
+   807fc:	4b03      	ldr	r3, [pc, #12]	; (8080c <printf+0x20>)
+   807fe:	4798      	blx	r3
+   80800:	b003      	add	sp, #12
+   80802:	f85d eb04 	ldr.w	lr, [sp], #4
+   80806:	b004      	add	sp, #16
+   80808:	4770      	bx	lr
+   8080a:	bf00      	nop
+   8080c:	0008069d 	.word	0x0008069d
+
+00080810 <configure_uart>:
+	uint32_t ul_sr;
+
+/*
+Initialize UART ring buffer as empty
+*/
+rx_buffer.head=0;
+   80810:	4b16      	ldr	r3, [pc, #88]	; (8086c <configure_uart+0x5c>)
+   80812:	2200      	movs	r2, #0
+   80814:	701a      	strb	r2, [r3, #0]
+rx_buffer.tail=0;
+   80816:	705a      	strb	r2, [r3, #1]
+/*
+Initialize UART communication
+*/
+	// Pin configuration
+	// Disable interrupts on Uart receive (URXD) and transmit (UTXD) pins
+	PIOA->PIO_IDR = PIO_PA8A_URXD | PIO_PA9A_UTXD;
+   80818:	4b15      	ldr	r3, [pc, #84]	; (80870 <configure_uart+0x60>)
+   8081a:	f44f 7140 	mov.w	r1, #768	; 0x300
+   8081e:	6459      	str	r1, [r3, #68]	; 0x44
+
+	// Disable the Parallel IO (PIO) of the URXD and UTXD pins so that the peripheral controller can use them
+	PIOA->PIO_PDR = PIO_PA8A_URXD | PIO_PA9A_UTXD;
+   80820:	6059      	str	r1, [r3, #4]
+
+	// Read current peripheral AB select register and set the UTXD and URXD pins to 0 (UART is connected as peripheral A)
+	ul_sr = PIOA->PIO_ABSR;
+   80822:	6f1a      	ldr	r2, [r3, #112]	; 0x70
+	PIOA->PIO_ABSR &= ~(PIO_PA8A_URXD | PIO_PA9A_UTXD) & ul_sr;
+   80824:	6f18      	ldr	r0, [r3, #112]	; 0x70
+   80826:	4002      	ands	r2, r0
+   80828:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+   8082c:	671a      	str	r2, [r3, #112]	; 0x70
+
+	// Enable pull up resistor on URXD and UTXD pin
+	PIOA->PIO_PUER = PIO_PA8A_URXD | PIO_PA9A_UTXD;
+   8082e:	6659      	str	r1, [r3, #100]	; 0x64
+
+	// Uart configuration
+	
+	// Enable the peripheral UART controller in Power Management Controller (PMC)
+	PMC->PMC_PCER0 = 1 << ID_UART;
+   80830:	f44f 7280 	mov.w	r2, #256	; 0x100
+   80834:	f5a3 6300 	sub.w	r3, r3, #2048	; 0x800
+   80838:	611a      	str	r2, [r3, #16]
+
+	// Reset and disable receiver and transmitter
+	UART->UART_CR = UART_CR_RSTRX | UART_CR_RSTTX | UART_CR_RXDIS | UART_CR_TXDIS;
+   8083a:	f503 7300 	add.w	r3, r3, #512	; 0x200
+   8083e:	21ac      	movs	r1, #172	; 0xac
+   80840:	6019      	str	r1, [r3, #0]
+
+	// Set the baudrate
+	UART->UART_BRGR = 547; // MCK / 16 * x = BaudRate (write x into UART_BRGR)  MCK = 84 Mhz
+   80842:	f240 2123 	movw	r1, #547	; 0x223
+   80846:	6219      	str	r1, [r3, #32]
+
+	// No parity bits
+	UART->UART_MR = UART_MR_PAR_NO | UART_MR_CHMODE_NORMAL;	
+   80848:	f44f 6100 	mov.w	r1, #2048	; 0x800
+   8084c:	6059      	str	r1, [r3, #4]
+
+	// Disable PDC channel
+	UART->UART_PTCR = UART_PTCR_RXTDIS | UART_PTCR_TXTDIS;
+   8084e:	f240 2102 	movw	r1, #514	; 0x202
+   80852:	f8c3 1120 	str.w	r1, [r3, #288]	; 0x120
+
+	// Configure interrupts on receive ready and errors
+	UART->UART_IDR = 0xFFFFFFFF;
+   80856:	f04f 31ff 	mov.w	r1, #4294967295
+   8085a:	60d9      	str	r1, [r3, #12]
+	UART->UART_IER = UART_IER_RXRDY | UART_IER_OVRE | UART_IER_FRAME | UART_IER_PARE;
+   8085c:	21e1      	movs	r1, #225	; 0xe1
+   8085e:	6099      	str	r1, [r3, #8]
+    NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+   80860:	4904      	ldr	r1, [pc, #16]	; (80874 <configure_uart+0x64>)
+   80862:	600a      	str	r2, [r1, #0]
+
+	// Enable UART interrupt in the Nested Vectored Interrupt Controller(NVIC)
+	NVIC_EnableIRQ((IRQn_Type) ID_UART);
+
+	// Enable UART receiver and transmitter
+	UART->UART_CR = UART_CR_RXEN | UART_CR_TXEN;
+   80864:	2250      	movs	r2, #80	; 0x50
+   80866:	601a      	str	r2, [r3, #0]
+   80868:	4770      	bx	lr
+   8086a:	bf00      	nop
+   8086c:	20000450 	.word	0x20000450
+   80870:	400e0e00 	.word	0x400e0e00
+   80874:	e000e100 	.word	0xe000e100
+
+00080878 <uart_putchar>:
+ * \retval Success(0) or failure(1).
+ */
+int uart_putchar(const uint8_t c)
+{
+	// Check if the transmitter is ready
+	if((UART->UART_SR & UART_SR_TXRDY) != UART_SR_TXRDY)
+   80878:	4b07      	ldr	r3, [pc, #28]	; (80898 <uart_putchar+0x20>)
+   8087a:	695b      	ldr	r3, [r3, #20]
+   8087c:	f013 0f02 	tst.w	r3, #2
+   80880:	d008      	beq.n	80894 <uart_putchar+0x1c>
+	return 1;
+
+	// Send the character
+	UART->UART_THR = c;
+   80882:	4b05      	ldr	r3, [pc, #20]	; (80898 <uart_putchar+0x20>)
+   80884:	61d8      	str	r0, [r3, #28]
+	while(!((UART->UART_SR) & UART_SR_TXEMPTY)); // Wait for the character to be sent, can implement ring buffer to remove the wait
+   80886:	4b04      	ldr	r3, [pc, #16]	; (80898 <uart_putchar+0x20>)
+   80888:	695b      	ldr	r3, [r3, #20]
+   8088a:	f413 7f00 	tst.w	r3, #512	; 0x200
+   8088e:	d0fa      	beq.n	80886 <uart_putchar+0xe>
+	return 0;
+   80890:	2000      	movs	r0, #0
+   80892:	4770      	bx	lr
+	return 1;
+   80894:	2001      	movs	r0, #1
+}
+   80896:	4770      	bx	lr
+   80898:	400e0800 	.word	0x400e0800
+
+0008089c <UART_Handler>:
+
+void UART_Handler(void)
+{
+   8089c:	b508      	push	{r3, lr}
+	uint32_t status = UART->UART_SR;
+   8089e:	4b15      	ldr	r3, [pc, #84]	; (808f4 <UART_Handler+0x58>)
+   808a0:	695b      	ldr	r3, [r3, #20]
+	
+	//Reset UART at overflow error and frame error
+	if(status & (UART_SR_OVRE | UART_SR_FRAME | UART_SR_PARE))
+   808a2:	f013 0fe0 	tst.w	r3, #224	; 0xe0
+   808a6:	d003      	beq.n	808b0 <UART_Handler+0x14>
+	{
+		UART->UART_CR = UART_CR_RXEN | UART_CR_TXEN | UART_CR_RSTSTA;
+   808a8:	f44f 71a8 	mov.w	r1, #336	; 0x150
+   808ac:	4a11      	ldr	r2, [pc, #68]	; (808f4 <UART_Handler+0x58>)
+   808ae:	6011      	str	r1, [r2, #0]
+	}
+	
+	//Check if message is ready to be received
+	if(status & UART_SR_RXRDY)
+   808b0:	f013 0f01 	tst.w	r3, #1
+   808b4:	d012      	beq.n	808dc <UART_Handler+0x40>
+	{
+		//Check if receive ring buffer is full and 
+		if((rx_buffer.tail + 1) % UART_RINGBUFFER_SIZE == rx_buffer.head)
+   808b6:	4810      	ldr	r0, [pc, #64]	; (808f8 <UART_Handler+0x5c>)
+   808b8:	7842      	ldrb	r2, [r0, #1]
+   808ba:	1c53      	adds	r3, r2, #1
+   808bc:	4259      	negs	r1, r3
+   808be:	f003 033f 	and.w	r3, r3, #63	; 0x3f
+   808c2:	f001 013f 	and.w	r1, r1, #63	; 0x3f
+   808c6:	bf58      	it	pl
+   808c8:	424b      	negpl	r3, r1
+   808ca:	7801      	ldrb	r1, [r0, #0]
+   808cc:	428b      	cmp	r3, r1
+   808ce:	d006      	beq.n	808de <UART_Handler+0x42>
+		{
+			printf("ERR: UART RX buffer is full\n\r");
+			rx_buffer.data[rx_buffer.tail] = UART->UART_RHR; //Throw away message
+			return;
+		}
+		rx_buffer.data[rx_buffer.tail] = UART->UART_RHR;
+   808d0:	4908      	ldr	r1, [pc, #32]	; (808f4 <UART_Handler+0x58>)
+   808d2:	6988      	ldr	r0, [r1, #24]
+   808d4:	4908      	ldr	r1, [pc, #32]	; (808f8 <UART_Handler+0x5c>)
+   808d6:	440a      	add	r2, r1
+   808d8:	7090      	strb	r0, [r2, #2]
+		rx_buffer.tail = (rx_buffer.tail + 1) % UART_RINGBUFFER_SIZE;
+   808da:	704b      	strb	r3, [r1, #1]
+   808dc:	bd08      	pop	{r3, pc}
+			printf("ERR: UART RX buffer is full\n\r");
+   808de:	4807      	ldr	r0, [pc, #28]	; (808fc <UART_Handler+0x60>)
+   808e0:	4b07      	ldr	r3, [pc, #28]	; (80900 <UART_Handler+0x64>)
+   808e2:	4798      	blx	r3
+			rx_buffer.data[rx_buffer.tail] = UART->UART_RHR; //Throw away message
+   808e4:	4b04      	ldr	r3, [pc, #16]	; (808f8 <UART_Handler+0x5c>)
+   808e6:	7859      	ldrb	r1, [r3, #1]
+   808e8:	4a02      	ldr	r2, [pc, #8]	; (808f4 <UART_Handler+0x58>)
+   808ea:	6992      	ldr	r2, [r2, #24]
+   808ec:	440b      	add	r3, r1
+   808ee:	709a      	strb	r2, [r3, #2]
+			return;
+   808f0:	bd08      	pop	{r3, pc}
+   808f2:	bf00      	nop
+   808f4:	400e0800 	.word	0x400e0800
+   808f8:	20000450 	.word	0x20000450
+   808fc:	00080adc 	.word	0x00080adc
+   80900:	000807ed 	.word	0x000807ed
+
+00080904 <__libc_init_array>:
+   80904:	b570      	push	{r4, r5, r6, lr}
+   80906:	4e0f      	ldr	r6, [pc, #60]	; (80944 <__libc_init_array+0x40>)
+   80908:	4d0f      	ldr	r5, [pc, #60]	; (80948 <__libc_init_array+0x44>)
+   8090a:	1b76      	subs	r6, r6, r5
+   8090c:	10b6      	asrs	r6, r6, #2
+   8090e:	bf18      	it	ne
+   80910:	2400      	movne	r4, #0
+   80912:	d005      	beq.n	80920 <__libc_init_array+0x1c>
+   80914:	3401      	adds	r4, #1
+   80916:	f855 3b04 	ldr.w	r3, [r5], #4
+   8091a:	4798      	blx	r3
+   8091c:	42a6      	cmp	r6, r4
+   8091e:	d1f9      	bne.n	80914 <__libc_init_array+0x10>
+   80920:	4e0a      	ldr	r6, [pc, #40]	; (8094c <__libc_init_array+0x48>)
+   80922:	4d0b      	ldr	r5, [pc, #44]	; (80950 <__libc_init_array+0x4c>)
+   80924:	f000 f8ec 	bl	80b00 <_init>
+   80928:	1b76      	subs	r6, r6, r5
+   8092a:	10b6      	asrs	r6, r6, #2
+   8092c:	bf18      	it	ne
+   8092e:	2400      	movne	r4, #0
+   80930:	d006      	beq.n	80940 <__libc_init_array+0x3c>
+   80932:	3401      	adds	r4, #1
+   80934:	f855 3b04 	ldr.w	r3, [r5], #4
+   80938:	4798      	blx	r3
+   8093a:	42a6      	cmp	r6, r4
+   8093c:	d1f9      	bne.n	80932 <__libc_init_array+0x2e>
+   8093e:	bd70      	pop	{r4, r5, r6, pc}
+   80940:	bd70      	pop	{r4, r5, r6, pc}
+   80942:	bf00      	nop
+   80944:	00080b0c 	.word	0x00080b0c
+   80948:	00080b0c 	.word	0x00080b0c
+   8094c:	00080b14 	.word	0x00080b14
+   80950:	00080b0c 	.word	0x00080b0c
+
+00080954 <register_fini>:
+   80954:	4b02      	ldr	r3, [pc, #8]	; (80960 <register_fini+0xc>)
+   80956:	b113      	cbz	r3, 8095e <register_fini+0xa>
+   80958:	4802      	ldr	r0, [pc, #8]	; (80964 <register_fini+0x10>)
+   8095a:	f000 b805 	b.w	80968 <atexit>
+   8095e:	4770      	bx	lr
+   80960:	00000000 	.word	0x00000000
+   80964:	00080975 	.word	0x00080975
+
+00080968 <atexit>:
+   80968:	2300      	movs	r3, #0
+   8096a:	4601      	mov	r1, r0
+   8096c:	461a      	mov	r2, r3
+   8096e:	4618      	mov	r0, r3
+   80970:	f000 b81e 	b.w	809b0 <__register_exitproc>
+
+00080974 <__libc_fini_array>:
+   80974:	b538      	push	{r3, r4, r5, lr}
+   80976:	4c0a      	ldr	r4, [pc, #40]	; (809a0 <__libc_fini_array+0x2c>)
+   80978:	4d0a      	ldr	r5, [pc, #40]	; (809a4 <__libc_fini_array+0x30>)
+   8097a:	1b64      	subs	r4, r4, r5
+   8097c:	10a4      	asrs	r4, r4, #2
+   8097e:	d00a      	beq.n	80996 <__libc_fini_array+0x22>
+   80980:	f104 4380 	add.w	r3, r4, #1073741824	; 0x40000000
+   80984:	3b01      	subs	r3, #1
+   80986:	eb05 0583 	add.w	r5, r5, r3, lsl #2
+   8098a:	3c01      	subs	r4, #1
+   8098c:	f855 3904 	ldr.w	r3, [r5], #-4
+   80990:	4798      	blx	r3
+   80992:	2c00      	cmp	r4, #0
+   80994:	d1f9      	bne.n	8098a <__libc_fini_array+0x16>
+   80996:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
+   8099a:	f000 b8bb 	b.w	80b14 <_fini>
+   8099e:	bf00      	nop
+   809a0:	00080b24 	.word	0x00080b24
+   809a4:	00080b20 	.word	0x00080b20
+
+000809a8 <__retarget_lock_acquire_recursive>:
+   809a8:	4770      	bx	lr
+   809aa:	bf00      	nop
+
+000809ac <__retarget_lock_release_recursive>:
+   809ac:	4770      	bx	lr
+   809ae:	bf00      	nop
+
+000809b0 <__register_exitproc>:
+   809b0:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
+   809b4:	4d2c      	ldr	r5, [pc, #176]	; (80a68 <__register_exitproc+0xb8>)
+   809b6:	4606      	mov	r6, r0
+   809b8:	6828      	ldr	r0, [r5, #0]
+   809ba:	4698      	mov	r8, r3
+   809bc:	460f      	mov	r7, r1
+   809be:	4691      	mov	r9, r2
+   809c0:	f7ff fff2 	bl	809a8 <__retarget_lock_acquire_recursive>
+   809c4:	4b29      	ldr	r3, [pc, #164]	; (80a6c <__register_exitproc+0xbc>)
+   809c6:	681c      	ldr	r4, [r3, #0]
+   809c8:	f8d4 3148 	ldr.w	r3, [r4, #328]	; 0x148
+   809cc:	2b00      	cmp	r3, #0
+   809ce:	d03e      	beq.n	80a4e <__register_exitproc+0x9e>
+   809d0:	685a      	ldr	r2, [r3, #4]
+   809d2:	2a1f      	cmp	r2, #31
+   809d4:	dc1c      	bgt.n	80a10 <__register_exitproc+0x60>
+   809d6:	f102 0e01 	add.w	lr, r2, #1
+   809da:	b176      	cbz	r6, 809fa <__register_exitproc+0x4a>
+   809dc:	2101      	movs	r1, #1
+   809de:	eb03 0482 	add.w	r4, r3, r2, lsl #2
+   809e2:	f8c4 9088 	str.w	r9, [r4, #136]	; 0x88
+   809e6:	f8d3 0188 	ldr.w	r0, [r3, #392]	; 0x188
+   809ea:	4091      	lsls	r1, r2
+   809ec:	4308      	orrs	r0, r1
+   809ee:	2e02      	cmp	r6, #2
+   809f0:	f8c3 0188 	str.w	r0, [r3, #392]	; 0x188
+   809f4:	f8c4 8108 	str.w	r8, [r4, #264]	; 0x108
+   809f8:	d023      	beq.n	80a42 <__register_exitproc+0x92>
+   809fa:	3202      	adds	r2, #2
+   809fc:	f8c3 e004 	str.w	lr, [r3, #4]
+   80a00:	6828      	ldr	r0, [r5, #0]
+   80a02:	f843 7022 	str.w	r7, [r3, r2, lsl #2]
+   80a06:	f7ff ffd1 	bl	809ac <__retarget_lock_release_recursive>
+   80a0a:	2000      	movs	r0, #0
+   80a0c:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
+   80a10:	4b17      	ldr	r3, [pc, #92]	; (80a70 <__register_exitproc+0xc0>)
+   80a12:	b30b      	cbz	r3, 80a58 <__register_exitproc+0xa8>
+   80a14:	f44f 70c8 	mov.w	r0, #400	; 0x190
+   80a18:	f3af 8000 	nop.w
+   80a1c:	4603      	mov	r3, r0
+   80a1e:	b1d8      	cbz	r0, 80a58 <__register_exitproc+0xa8>
+   80a20:	2000      	movs	r0, #0
+   80a22:	f8d4 1148 	ldr.w	r1, [r4, #328]	; 0x148
+   80a26:	f04f 0e01 	mov.w	lr, #1
+   80a2a:	6058      	str	r0, [r3, #4]
+   80a2c:	6019      	str	r1, [r3, #0]
+   80a2e:	4602      	mov	r2, r0
+   80a30:	f8c4 3148 	str.w	r3, [r4, #328]	; 0x148
+   80a34:	f8c3 0188 	str.w	r0, [r3, #392]	; 0x188
+   80a38:	f8c3 018c 	str.w	r0, [r3, #396]	; 0x18c
+   80a3c:	2e00      	cmp	r6, #0
+   80a3e:	d0dc      	beq.n	809fa <__register_exitproc+0x4a>
+   80a40:	e7cc      	b.n	809dc <__register_exitproc+0x2c>
+   80a42:	f8d3 018c 	ldr.w	r0, [r3, #396]	; 0x18c
+   80a46:	4301      	orrs	r1, r0
+   80a48:	f8c3 118c 	str.w	r1, [r3, #396]	; 0x18c
+   80a4c:	e7d5      	b.n	809fa <__register_exitproc+0x4a>
+   80a4e:	f504 73a6 	add.w	r3, r4, #332	; 0x14c
+   80a52:	f8c4 3148 	str.w	r3, [r4, #328]	; 0x148
+   80a56:	e7bb      	b.n	809d0 <__register_exitproc+0x20>
+   80a58:	6828      	ldr	r0, [r5, #0]
+   80a5a:	f7ff ffa7 	bl	809ac <__retarget_lock_release_recursive>
+   80a5e:	f04f 30ff 	mov.w	r0, #4294967295
+   80a62:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
+   80a66:	bf00      	nop
+   80a68:	20000430 	.word	0x20000430
+   80a6c:	00080afc 	.word	0x00080afc
+   80a70:	00000000 	.word	0x00000000
+   80a74:	304e4143 	.word	0x304e4143
+   80a78:	73656d20 	.word	0x73656d20
+   80a7c:	65676173 	.word	0x65676173
+   80a80:	72726120 	.word	0x72726120
+   80a84:	64657669 	.word	0x64657669
+   80a88:	206e6920 	.word	0x206e6920
+   80a8c:	2d6e6f6e 	.word	0x2d6e6f6e
+   80a90:	64657375 	.word	0x64657375
+   80a94:	69616d20 	.word	0x69616d20
+   80a98:	786f626c 	.word	0x786f626c
+   80a9c:	00000d0a 	.word	0x00000d0a
+   80aa0:	7373656d 	.word	0x7373656d
+   80aa4:	20656761 	.word	0x20656761
+   80aa8:	203a6469 	.word	0x203a6469
+   80aac:	0d0a6425 	.word	0x0d0a6425
+   80ab0:	00000000 	.word	0x00000000
+   80ab4:	7373656d 	.word	0x7373656d
+   80ab8:	20656761 	.word	0x20656761
+   80abc:	61746164 	.word	0x61746164
+   80ac0:	6e656c20 	.word	0x6e656c20
+   80ac4:	3a687467 	.word	0x3a687467
+   80ac8:	0a642520 	.word	0x0a642520
+   80acc:	0000000d 	.word	0x0000000d
+   80ad0:	00206425 	.word	0x00206425
+   80ad4:	6c756e28 	.word	0x6c756e28
+   80ad8:	0000296c 	.word	0x0000296c
+   80adc:	3a525245 	.word	0x3a525245
+   80ae0:	52415520 	.word	0x52415520
+   80ae4:	58522054 	.word	0x58522054
+   80ae8:	66756220 	.word	0x66756220
+   80aec:	20726566 	.word	0x20726566
+   80af0:	66207369 	.word	0x66207369
+   80af4:	0a6c6c75 	.word	0x0a6c6c75
+   80af8:	0000000d 	.word	0x0000000d
+
+00080afc <_global_impure_ptr>:
+   80afc:	20000008                                ... 
+
+00080b00 <_init>:
+   80b00:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   80b02:	bf00      	nop
+   80b04:	bcf8      	pop	{r3, r4, r5, r6, r7}
+   80b06:	bc08      	pop	{r3}
+   80b08:	469e      	mov	lr, r3
+   80b0a:	4770      	bx	lr
+
+00080b0c <__init_array_start>:
+   80b0c:	00080955 	.word	0x00080955
+
+00080b10 <__frame_dummy_init_array_entry>:
+   80b10:	00080119                                ....
+
+00080b14 <_fini>:
+   80b14:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   80b16:	bf00      	nop
+   80b18:	bcf8      	pop	{r3, r4, r5, r6, r7}
+   80b1a:	bc08      	pop	{r3}
+   80b1c:	469e      	mov	lr, r3
+   80b1e:	4770      	bx	lr
+
+00080b20 <__fini_array_start>:
+   80b20:	000800f5 	.word	0x000800f5
