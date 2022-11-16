@@ -62,7 +62,7 @@ uint16_t encoder_read(void){ // Target area is about 8561 -> 0, asuming the enco
 }
 
 
-void motor_write(value){ // input 0-200 -> output 0-4095 / 0-5V & direction
+void motor_write(value){ // input 0-200 -> output 0-100 / 0-5V & direction
 	
 	PIOD->PIO_SODR |= PIO_PD9; //enables motor
 	

@@ -29,11 +29,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  12 .debug_line   00005678  00000000  00000000  0003ce12  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    00056587  00000000  00000000  0004248a  2**0
+ 13 .debug_str    000565ba  00000000  00000000  0004248a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_frame  00000620  00000000  00000000  00098a14  2**2
+ 14 .debug_frame  00000620  00000000  00000000  00098a44  2**2
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    00000f8d  00000000  00000000  00099034  2**0
+ 15 .debug_loc    00000f8d  00000000  00000000  00099064  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -122,16 +122,7 @@ Disassembly of section .text:
    80188:	33200080 	.word	0x33200080
 
 0008018c <can_init>:
- * \retval Success(0) or failure(1)
- */
-
-
-uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
-{
    8018c:	b4f0      	push	{r4, r5, r6, r7}
-	
-	//Make sure num_rx_mb and num_tx_mb is valid
-	if(num_rx_mb > 8 | num_tx_mb > 8 | num_rx_mb + num_tx_mb > 8)
    8018e:	1856      	adds	r6, r2, r1
    80190:	2e08      	cmp	r6, #8
    80192:	bfd4      	ite	le
@@ -144,124 +135,60 @@ uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
    801a0:	460c      	mov	r4, r1
    801a2:	2b00      	cmp	r3, #0
    801a4:	d155      	bne.n	80252 <can_init+0xc6>
-
-
-	uint32_t ul_status; 
-	
-	//Disable can
-	CAN0->CAN_MR &= ~CAN_MR_CANEN; 
    801a6:	4a2c      	ldr	r2, [pc, #176]	; (80258 <can_init+0xcc>)
    801a8:	6813      	ldr	r3, [r2, #0]
    801aa:	f023 0301 	bic.w	r3, r3, #1
    801ae:	6013      	str	r3, [r2, #0]
-	//Clear status register on read
-	ul_status = CAN0->CAN_SR; 
    801b0:	6913      	ldr	r3, [r2, #16]
-	
-	
-	// Disable interrupts on CANH and CANL pins
-	PIOA->PIO_IDR = PIO_PA8A_URXD | PIO_PA9A_UTXD;
    801b2:	4b2a      	ldr	r3, [pc, #168]	; (8025c <can_init+0xd0>)
    801b4:	f44f 7540 	mov.w	r5, #768	; 0x300
    801b8:	645d      	str	r5, [r3, #68]	; 0x44
-	
-	//Select CAN0 RX and TX in PIOA
-	uint32_t ul_sr = PIOA->PIO_ABSR;
    801ba:	6f1d      	ldr	r5, [r3, #112]	; 0x70
-	PIOA->PIO_ABSR = ~(PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0) & ul_sr;
    801bc:	f025 0503 	bic.w	r5, r5, #3
    801c0:	671d      	str	r5, [r3, #112]	; 0x70
-	
-	// Disable the Parallel IO (PIO) of the Rx and Tx pins so that the peripheral controller can use them
-	PIOA->PIO_PDR = PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0;
    801c2:	2503      	movs	r5, #3
    801c4:	605d      	str	r5, [r3, #4]
-	
-	// Enable pull up on CANH and CANL pin
-	PIOA->PIO_PUER = (PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0);
    801c6:	665d      	str	r5, [r3, #100]	; 0x64
-	
-	
-	//Enable Clock for CAN0 in PMC
-	PMC->PMC_PCR = PMC_PCR_EN | (0 << PMC_PCR_DIV_Pos) | PMC_PCR_CMD | (ID_CAN0 << PMC_PCR_PID_Pos); // DIV = 1(can clk = MCK/2), CMD = 1 (write), PID = 2B (CAN0)
    801c8:	f5a3 6300 	sub.w	r3, r3, #2048	; 0x800
    801cc:	4d24      	ldr	r5, [pc, #144]	; (80260 <can_init+0xd4>)
    801ce:	f8c3 510c 	str.w	r5, [r3, #268]	; 0x10c
-	PMC->PMC_PCER1 |= 1 << (ID_CAN0 - 32);
    801d2:	f8d3 5100 	ldr.w	r5, [r3, #256]	; 0x100
    801d6:	f445 6500 	orr.w	r5, r5, #2048	; 0x800
    801da:	f8c3 5100 	str.w	r5, [r3, #256]	; 0x100
-	// SJW = 3TQ, BRP = 3, TQ = 8/Fosc, PROPSEG = 2/TQ, PS1 = 8/TQ, SAMPLE 3, PS2 = 8/TQ
-	// TQ_NODE_1 = 8/ 16 Mhz, TQ_NODE_2 = 41+1 / 84 MHZ
-	//                ???????1 ?0101001 ??10?001  ?111?111
-	// can_br = 0b1 00101001 00100001 01110111
-	// can_br = 0x1292177
-	CAN0->CAN_BR = can_br; 
    801de:	6150      	str	r0, [r2, #20]
-	
-
-	/****** Start of mailbox configuration ******/
-
-	uint32_t can_ier = 0;
    801e0:	2000      	movs	r0, #0
-
-	/* Configure receive mailboxes */
-	for (int n = num_tx_mb; n <= num_rx_mb + num_tx_mb; n++)  //Simply one mailbox setup for all messages. You might want to apply filter for them.
    801e2:	e015      	b.n	80210 <can_init+0x84>
-	{
-		CAN0->CAN_MB[n].CAN_MAM = 0x1F83FFFF; //Accept messages with id < 31
    801e4:	4b1c      	ldr	r3, [pc, #112]	; (80258 <can_init+0xcc>)
    801e6:	f101 0210 	add.w	r2, r1, #16
    801ea:	0152      	lsls	r2, r2, #5
    801ec:	189d      	adds	r5, r3, r2
    801ee:	4f1d      	ldr	r7, [pc, #116]	; (80264 <can_init+0xd8>)
    801f0:	606f      	str	r7, [r5, #4]
-		//CAN0->CAN_MB[n].CAN_MAM = 0x00;
-		//CAN0->CAN_MB[n].CAN_MID = CAN_MID_MIDE;
-		CAN0->CAN_MB[n].CAN_MMR = (CAN_MMR_MOT_MB_RX);
    801f2:	f04f 7580 	mov.w	r5, #16777216	; 0x1000000
    801f6:	509d      	str	r5, [r3, r2]
-		CAN0->CAN_MB[n].CAN_MCR |= CAN_MCR_MTCR;
    801f8:	eb03 1341 	add.w	r3, r3, r1, lsl #5
    801fc:	f8d3 221c 	ldr.w	r2, [r3, #540]	; 0x21c
    80200:	f442 0200 	orr.w	r2, r2, #8388608	; 0x800000
    80204:	f8c3 221c 	str.w	r2, [r3, #540]	; 0x21c
-
-		can_ier |= 1 << n; //Enable interrupt on rx mailbox
    80208:	2301      	movs	r3, #1
    8020a:	408b      	lsls	r3, r1
    8020c:	4318      	orrs	r0, r3
-	for (int n = num_tx_mb; n <= num_rx_mb + num_tx_mb; n++)  //Simply one mailbox setup for all messages. You might want to apply filter for them.
    8020e:	3101      	adds	r1, #1
    80210:	42b1      	cmp	r1, r6
    80212:	dde7      	ble.n	801e4 <can_init+0x58>
    80214:	2300      	movs	r3, #0
    80216:	e00d      	b.n	80234 <can_init+0xa8>
-	}
-	
-	/*Configure transmit mailboxes */
-	for (int n = 0; n < num_tx_mb; n++)
-	{
-		CAN0->CAN_MB[n].CAN_MID = CAN_MID_MIDE;
    80218:	490f      	ldr	r1, [pc, #60]	; (80258 <can_init+0xcc>)
    8021a:	eb01 1243 	add.w	r2, r1, r3, lsl #5
    8021e:	f04f 5500 	mov.w	r5, #536870912	; 0x20000000
    80222:	f8c2 5208 	str.w	r5, [r2, #520]	; 0x208
-		CAN0->CAN_MB[n].CAN_MMR = (CAN_MMR_MOT_MB_TX);
    80226:	f103 0210 	add.w	r2, r3, #16
    8022a:	0152      	lsls	r2, r2, #5
    8022c:	f04f 7540 	mov.w	r5, #50331648	; 0x3000000
    80230:	508d      	str	r5, [r1, r2]
-	for (int n = 0; n < num_tx_mb; n++)
    80232:	3301      	adds	r3, #1
    80234:	42a3      	cmp	r3, r4
    80236:	dbef      	blt.n	80218 <can_init+0x8c>
-	}
-	
-	/****** End of mailbox configuraion ******/
-
-	//Enable interrupt on receive mailboxes
-	CAN0->CAN_IER = can_ier;
    80238:	4b07      	ldr	r3, [pc, #28]	; (80258 <can_init+0xcc>)
    8023a:	6058      	str	r0, [r3, #4]
  */
@@ -273,22 +200,12 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
    8023c:	f44f 6100 	mov.w	r1, #2048	; 0x800
    80240:	4a09      	ldr	r2, [pc, #36]	; (80268 <can_init+0xdc>)
    80242:	6051      	str	r1, [r2, #4]
-
-	//Enable interrupt in NVIC 
-	NVIC_EnableIRQ(ID_CAN0);
-
-	//enable CAN
-	CAN0->CAN_MR |= CAN_MR_CANEN;
    80244:	681a      	ldr	r2, [r3, #0]
    80246:	f042 0201 	orr.w	r2, r2, #1
    8024a:	601a      	str	r2, [r3, #0]
-
-	return 0;
    8024c:	2000      	movs	r0, #0
-}
    8024e:	bcf0      	pop	{r4, r5, r6, r7}
    80250:	4770      	bx	lr
-		return 1; //Too many mailboxes is configured
    80252:	2001      	movs	r0, #1
    80254:	e7fb      	b.n	8024e <can_init+0xc2>
    80256:	bf00      	nop
@@ -299,180 +216,89 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
    80268:	e000e100 	.word	0xe000e100
 
 0008026c <can_receive>:
- * \retval Success(0) or failure(1)
- */
-uint8_t can_receive(CAN_MESSAGE* can_msg, uint8_t rx_mb_id)
-{
-	//Check that mailbox is ready
-	if(CAN0->CAN_MB[rx_mb_id].CAN_MSR & CAN_MSR_MRDY)
    8026c:	014b      	lsls	r3, r1, #5
    8026e:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
    80272:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
    80276:	f8d3 3210 	ldr.w	r3, [r3, #528]	; 0x210
    8027a:	f413 0f00 	tst.w	r3, #8388608	; 0x800000
    8027e:	d033      	beq.n	802e8 <can_receive+0x7c>
-{
    80280:	b470      	push	{r4, r5, r6}
-	{
-		//Get data from CAN mailbox
-		uint32_t data_low = CAN0->CAN_MB[rx_mb_id].CAN_MDL;
    80282:	014b      	lsls	r3, r1, #5
    80284:	f103 2340 	add.w	r3, r3, #1073758208	; 0x40004000
    80288:	f503 2330 	add.w	r3, r3, #720896	; 0xb0000
    8028c:	f8d3 4214 	ldr.w	r4, [r3, #532]	; 0x214
-		uint32_t data_high = CAN0->CAN_MB[rx_mb_id].CAN_MDH;
    80290:	f8d3 2218 	ldr.w	r2, [r3, #536]	; 0x218
-		
-		//Get message ID
-		can_msg->id = (uint8_t)((CAN0->CAN_MB[rx_mb_id].CAN_MID & CAN_MID_MIDvA_Msk) >> CAN_MID_MIDvA_Pos);
    80294:	f8d3 5208 	ldr.w	r5, [r3, #520]	; 0x208
    80298:	f3c5 4587 	ubfx	r5, r5, #18, #8
    8029c:	7005      	strb	r5, [r0, #0]
-		
-		//Get data length
-		can_msg->data_length = (uint8_t)((CAN0->CAN_MB[rx_mb_id].CAN_MSR & CAN_MSR_MDLC_Msk) >> CAN_MSR_MDLC_Pos);
    8029e:	f8d3 5210 	ldr.w	r5, [r3, #528]	; 0x210
    802a2:	f3c5 4503 	ubfx	r5, r5, #16, #4
    802a6:	7045      	strb	r5, [r0, #1]
-		
-		//Put data in CAN_MESSAGE object
-		for(int i = 0; i < can_msg->data_length;i++)
    802a8:	2300      	movs	r3, #0
    802aa:	e003      	b.n	802b4 <can_receive+0x48>
-				can_msg->data[i] = (char)(data_low & 0xff);
-				data_low = data_low >> 8;
-			}
-			else
-			{
-				can_msg->data[i] = (uint8_t)(data_high & 0xff);
    802ac:	18c6      	adds	r6, r0, r3
    802ae:	70b2      	strb	r2, [r6, #2]
-				data_high = data_high >> 8;
    802b0:	0a12      	lsrs	r2, r2, #8
-		for(int i = 0; i < can_msg->data_length;i++)
    802b2:	3301      	adds	r3, #1
    802b4:	42ab      	cmp	r3, r5
    802b6:	da05      	bge.n	802c4 <can_receive+0x58>
-			if(i < 4)
    802b8:	2b03      	cmp	r3, #3
    802ba:	dcf7      	bgt.n	802ac <can_receive+0x40>
-				can_msg->data[i] = (char)(data_low & 0xff);
    802bc:	18c6      	adds	r6, r0, r3
    802be:	70b4      	strb	r4, [r6, #2]
-				data_low = data_low >> 8;
    802c0:	0a24      	lsrs	r4, r4, #8
    802c2:	e7f6      	b.n	802b2 <can_receive+0x46>
-			}
-		}
-		
-		//Reset for new receive
-		CAN0->CAN_MB[rx_mb_id].CAN_MMR = CAN_MMR_MOT_MB_RX;
    802c4:	4b09      	ldr	r3, [pc, #36]	; (802ec <can_receive+0x80>)
    802c6:	f101 0210 	add.w	r2, r1, #16
    802ca:	0152      	lsls	r2, r2, #5
    802cc:	f04f 7080 	mov.w	r0, #16777216	; 0x1000000
    802d0:	5098      	str	r0, [r3, r2]
-		CAN0->CAN_MB[rx_mb_id].CAN_MCR |= CAN_MCR_MTCR;
    802d2:	eb03 1141 	add.w	r1, r3, r1, lsl #5
    802d6:	f8d1 321c 	ldr.w	r3, [r1, #540]	; 0x21c
    802da:	f443 0300 	orr.w	r3, r3, #8388608	; 0x800000
    802de:	f8c1 321c 	str.w	r3, [r1, #540]	; 0x21c
-		return 0;
    802e2:	2000      	movs	r0, #0
-	}
-	else //Mailbox busy
-	{
-		return 1;
-	}
-}
    802e4:	bc70      	pop	{r4, r5, r6}
    802e6:	4770      	bx	lr
-		return 1;
    802e8:	2001      	movs	r0, #1
    802ea:	4770      	bx	lr
    802ec:	400b4000 	.word	0x400b4000
 
 000802f0 <CAN0_Handler>:
- * \param void
- *
- * \retval 
- */
-void CAN0_Handler( void )
-{
    802f0:	b510      	push	{r4, lr}
    802f2:	b084      	sub	sp, #16
-	//if(DEBUG_INTERRUPT)printf("CAN0 interrupt\n\r");
-	char can_sr = CAN0->CAN_SR; 
    802f4:	4b1c      	ldr	r3, [pc, #112]	; (80368 <CAN0_Handler+0x78>)
    802f6:	691c      	ldr	r4, [r3, #16]
-	
-	//RX interrupt
-	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2) )//Only mailbox 1 and 2 specified for receiving
    802f8:	f014 0f06 	tst.w	r4, #6
    802fc:	d01d      	beq.n	8033a <CAN0_Handler+0x4a>
-	{
-		CAN_MESSAGE message;
-		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
    802fe:	f014 0f02 	tst.w	r4, #2
    80302:	d108      	bne.n	80316 <CAN0_Handler+0x26>
-		{
-			can_receive(&message, 1);
-
-		}
-		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
    80304:	f014 0f04 	tst.w	r4, #4
    80308:	d00a      	beq.n	80320 <CAN0_Handler+0x30>
-		
-		{
-			can_receive(&message, 2);
    8030a:	2102      	movs	r1, #2
    8030c:	a801      	add	r0, sp, #4
    8030e:	4b17      	ldr	r3, [pc, #92]	; (8036c <CAN0_Handler+0x7c>)
    80310:	4798      	blx	r3
-		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
-		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
-		
-	
-		
-		for (int i = 0; i < message.data_length; i++)
    80312:	2300      	movs	r3, #0
    80314:	e009      	b.n	8032a <CAN0_Handler+0x3a>
-			can_receive(&message, 1);
    80316:	2101      	movs	r1, #1
    80318:	a801      	add	r0, sp, #4
    8031a:	4b14      	ldr	r3, [pc, #80]	; (8036c <CAN0_Handler+0x7c>)
    8031c:	4798      	blx	r3
    8031e:	e7f8      	b.n	80312 <CAN0_Handler+0x22>
-			printf("CAN0 message arrived in non-used mailbox\n\r");
    80320:	4813      	ldr	r0, [pc, #76]	; (80370 <CAN0_Handler+0x80>)
    80322:	4b14      	ldr	r3, [pc, #80]	; (80374 <CAN0_Handler+0x84>)
    80324:	4798      	blx	r3
    80326:	e7f4      	b.n	80312 <CAN0_Handler+0x22>
-		for (int i = 0; i < message.data_length; i++)
    80328:	3301      	adds	r3, #1
    8032a:	f89d 2005 	ldrb.w	r2, [sp, #5]
    8032e:	4293      	cmp	r3, r2
    80330:	dbfa      	blt.n	80328 <CAN0_Handler+0x38>
-		{
-			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
-		}
-		if (message.id == 1){
    80332:	f89d 3004 	ldrb.w	r3, [sp, #4]
    80336:	2b01      	cmp	r3, #1
    80338:	d00c      	beq.n	80354 <CAN0_Handler+0x64>
-		}
-		//can_send(&message, 0); //REPLIES WITH THE SAME MESSAGE BACK
-		if(DEBUG_INTERRUPT)printf("\n\r");
-	}
-	
-	if(can_sr & CAN_SR_MB0)
    8033a:	f014 0f01 	tst.w	r4, #1
    8033e:	d002      	beq.n	80346 <CAN0_Handler+0x56>
-	{
-		//if(DEBUG_INTERRUPT) printf("CAN0 MB0 ready to send \n\r");
-		
-	//Disable interrupt
-		CAN0->CAN_IDR = CAN_IER_MB0;
    80340:	2201      	movs	r2, #1
    80342:	4b09      	ldr	r3, [pc, #36]	; (80368 <CAN0_Handler+0x78>)
    80344:	609a      	str	r2, [r3, #8]
@@ -485,19 +311,11 @@ __STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
    80346:	f44f 6200 	mov.w	r2, #2048	; 0x800
    8034a:	4b0b      	ldr	r3, [pc, #44]	; (80378 <CAN0_Handler+0x88>)
    8034c:	f8c3 2184 	str.w	r2, [r3, #388]	; 0x184
-
-	}
-	
-	NVIC_ClearPendingIRQ(ID_CAN0);
-	//sei();*/
-}
    80350:	b004      	add	sp, #16
    80352:	bd10      	pop	{r4, pc}
-			pwm_set_servo(message.data[0]);
    80354:	f89d 0006 	ldrb.w	r0, [sp, #6]
    80358:	4b08      	ldr	r3, [pc, #32]	; (8037c <CAN0_Handler+0x8c>)
    8035a:	4798      	blx	r3
-			motor_write(message.data[1]);
    8035c:	f89d 0007 	ldrb.w	r0, [sp, #7]
    80360:	4b07      	ldr	r3, [pc, #28]	; (80380 <CAN0_Handler+0x90>)
    80362:	4798      	blx	r3
@@ -512,32 +330,18 @@ __STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
    80380:	00080645 	.word	0x00080645
 
 00080384 <dac_init>:
-#include "uart.h"
-
-void dac_init(void){
-	
-	
-	PMC->PMC_PCER1 |= 1 << (ID_DACC - 32); //Allows power to PID38, DAC;
    80384:	4a0b      	ldr	r2, [pc, #44]	; (803b4 <dac_init+0x30>)
    80386:	f8d2 3100 	ldr.w	r3, [r2, #256]	; 0x100
    8038a:	f043 0340 	orr.w	r3, r3, #64	; 0x40
    8038e:	f8c2 3100 	str.w	r3, [r2, #256]	; 0x100
-	
-	
-	PIOB->PIO_PDR |= PIO_PB16X1_DAC1; //Disables the PIO, so that peripheral can use it. Not sure if this is the correct implementation
    80392:	f502 6220 	add.w	r2, r2, #2560	; 0xa00
    80396:	6853      	ldr	r3, [r2, #4]
    80398:	f443 3380 	orr.w	r3, r3, #65536	; 0x10000
    8039c:	6053      	str	r3, [r2, #4]
-	
-	
-	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1;
    8039e:	4b06      	ldr	r3, [pc, #24]	; (803b8 <dac_init+0x34>)
    803a0:	685a      	ldr	r2, [r3, #4]
    803a2:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
    803a6:	605a      	str	r2, [r3, #4]
-	
-	DACC->DACC_CHER |= DACC_CHER_CH1;
    803a8:	691a      	ldr	r2, [r3, #16]
    803aa:	f042 0202 	orr.w	r2, r2, #2
    803ae:	611a      	str	r2, [r3, #16]
@@ -547,22 +351,11 @@ void dac_init(void){
    803b8:	400c8000 	.word	0x400c8000
 
 000803bc <dac_write>:
-}
-
-void dac_write(int value){ //inputs 0-100, outputs 0-4095 / 0-5V
-	
-	value = value * 41;
    803bc:	eb00 0380 	add.w	r3, r0, r0, lsl #2
    803c0:	eb00 00c3 	add.w	r0, r0, r3, lsl #3
-	if (value > 4095){
    803c4:	f5b0 5f80 	cmp.w	r0, #4096	; 0x1000
    803c8:	db01      	blt.n	803ce <dac_write+0x12>
-		value = 4095;
    803ca:	f640 70ff 	movw	r0, #4095	; 0xfff
-	}
-	
-	
-	DACC->DACC_CDR = value;
    803ce:	4b01      	ldr	r3, [pc, #4]	; (803d4 <dac_write+0x18>)
    803d0:	6218      	str	r0, [r3, #32]
    803d2:	4770      	bx	lr
@@ -700,83 +493,39 @@ void dac_write(int value){ //inputs 0-100, outputs 0-4095 / 0-5V
    8050c:	2000045c 	.word	0x2000045c
 
 00080510 <main>:
-
-
-
-
-int main(void)
-{
    80510:	b508      	push	{r3, lr}
-    /* Initialize the SAM system */
-    SystemInit();
    80512:	4b13      	ldr	r3, [pc, #76]	; (80560 <main+0x50>)
    80514:	4798      	blx	r3
-	
-	
-	
-	
-	configure_uart(); //STARTS THE UART
    80516:	4b13      	ldr	r3, [pc, #76]	; (80564 <main+0x54>)
    80518:	4798      	blx	r3
-	
-	can_init(0x1292177,1,2);
    8051a:	2202      	movs	r2, #2
    8051c:	2101      	movs	r1, #1
    8051e:	4812      	ldr	r0, [pc, #72]	; (80568 <main+0x58>)
    80520:	4b12      	ldr	r3, [pc, #72]	; (8056c <main+0x5c>)
    80522:	4798      	blx	r3
-	
-	pwm_init();
    80524:	4b12      	ldr	r3, [pc, #72]	; (80570 <main+0x60>)
    80526:	4798      	blx	r3
-	
-	adc_init();
    80528:	4b12      	ldr	r3, [pc, #72]	; (80574 <main+0x64>)
    8052a:	4798      	blx	r3
-	
-	timer_init();
    8052c:	4b12      	ldr	r3, [pc, #72]	; (80578 <main+0x68>)
    8052e:	4798      	blx	r3
-		
-	game_init();
    80530:	4b12      	ldr	r3, [pc, #72]	; (8057c <main+0x6c>)
    80532:	4798      	blx	r3
-	
-	dac_init();
    80534:	4b12      	ldr	r3, [pc, #72]	; (80580 <main+0x70>)
    80536:	4798      	blx	r3
-	
-	motor_init();
    80538:	4b12      	ldr	r3, [pc, #72]	; (80584 <main+0x74>)
    8053a:	4798      	blx	r3
-	
-	
-	WDT->WDT_MR = WDT_MR_WDDIS; //DISABLES THE WATCHDOG
    8053c:	f44f 4200 	mov.w	r2, #32768	; 0x8000
    80540:	4b11      	ldr	r3, [pc, #68]	; (80588 <main+0x78>)
    80542:	605a      	str	r2, [r3, #4]
-	
-	PIOA->PIO_PER = PIO_PA19 | PIO_PA20; // PIN I/O SELECT
    80544:	f5a3 6345 	sub.w	r3, r3, #3152	; 0xc50
    80548:	f44f 12c0 	mov.w	r2, #1572864	; 0x180000
    8054c:	601a      	str	r2, [r3, #0]
-	PIOA->PIO_OER = PIO_PA19 | PIO_PA20; // PIN OUTPUT SELECT
    8054e:	611a      	str	r2, [r3, #16]
-	
-	PIOA->PIO_SODR = PIO_PA19; //PIN SET OUTPUT DATA REGISTER
    80550:	f44f 2200 	mov.w	r2, #524288	; 0x80000
    80554:	631a      	str	r2, [r3, #48]	; 0x30
-	int i = 1;
-	
-	while (1) 
-    {
-		//adc_read();
-		CAN0_Handler();
    80556:	4b0d      	ldr	r3, [pc, #52]	; (8058c <main+0x7c>)
    80558:	4798      	blx	r3
-		//timer_read();
-		//game_check_loss();
-		encoder_read();
    8055a:	4b0d      	ldr	r3, [pc, #52]	; (80590 <main+0x80>)
    8055c:	4798      	blx	r3
    8055e:	e7fa      	b.n	80556 <main+0x46>
@@ -855,7 +604,7 @@ void motor_init(){
 000805e4 <encoder_read>:
 
 
-uint16_t encoder_read(void){
+uint16_t encoder_read(void){ // Target area is about 8561 -> 0, asuming the encoder is at the right most position
    805e4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
 	uint8_t value_low;
 	uint8_t value_high;
@@ -918,7 +667,7 @@ uint16_t encoder_read(void){
 00080644 <motor_write>:
 
 
-void motor_write(value){ // input 0-200 -> output 0-4095 / 0-5V & direction
+void motor_write(value){ // input 0-200 -> output 0-100 / 0-5V & direction
    80644:	b508      	push	{r3, lr}
 	
 	PIOD->PIO_SODR |= PIO_PD9; //enables motor
@@ -1354,33 +1103,17 @@ void motor_write(value){ // input 0-200 -> output 0-4095 / 0-5V & direction
    809e4:	000809ad 	.word	0x000809ad
 
 000809e8 <timer_init>:
-
-
-void timer_init(){
-	
-	
-		PMC->PMC_PCER0 |= 1 << (ID_TC0);
    809e8:	4a09      	ldr	r2, [pc, #36]	; (80a10 <timer_init+0x28>)
    809ea:	6913      	ldr	r3, [r2, #16]
    809ec:	f043 6300 	orr.w	r3, r3, #134217728	; 0x8000000
    809f0:	6113      	str	r3, [r2, #16]
-		
-		//PIOB->PIO_PDR |= PIO_PB26B_TCLK0; //Disables IO for the TCKL0
-		
-		//PIOB->PIO_ABSR |= PIO_PB26B_TCLK0; //Selects peripheral 2.
-		
-		TC0->TC_CHANNEL->TC_CMR |= TC_CMR_TCCLKS_TIMER_CLOCK4; //TIMER = MSCKL / 128
    809f2:	4b08      	ldr	r3, [pc, #32]	; (80a14 <timer_init+0x2c>)
    809f4:	685a      	ldr	r2, [r3, #4]
    809f6:	f042 0203 	orr.w	r2, r2, #3
    809fa:	605a      	str	r2, [r3, #4]
-		
-		TC0->TC_CHANNEL->TC_CCR |= TC_CCR_CLKEN;
    809fc:	681a      	ldr	r2, [r3, #0]
    809fe:	f042 0201 	orr.w	r2, r2, #1
    80a02:	601a      	str	r2, [r3, #0]
-		
-		TC0->TC_CHANNEL->TC_CCR |= TC_CCR_SWTRG;
    80a04:	681a      	ldr	r2, [r3, #0]
    80a06:	f042 0204 	orr.w	r2, r2, #4
    80a0a:	601a      	str	r2, [r3, #0]
@@ -1390,49 +1123,27 @@ void timer_init(){
    80a14:	40080000 	.word	0x40080000
 
 00080a18 <timer_read>:
-		
-}
-
-int timer_read(){
-	
-	int value = TC0->TC_CHANNEL->TC_CV;
    80a18:	4b01      	ldr	r3, [pc, #4]	; (80a20 <timer_read+0x8>)
    80a1a:	6918      	ldr	r0, [r3, #16]
-	
-
-	//printf("%d \r \n", value);
-	
-	return value;
-}
    80a1c:	4770      	bx	lr
    80a1e:	bf00      	nop
    80a20:	40080000 	.word	0x40080000
 
 00080a24 <delay_micros_10>:
-
-void delay_micros_10(int length){ // a simple delay function, delays by length * 10 ms, 10 ms is 6.56 counts, rounded up to 7
    80a24:	b538      	push	{r3, r4, r5, lr}
    80a26:	4604      	mov	r4, r0
-	
-	int startime = timer_read();
    80a28:	4b06      	ldr	r3, [pc, #24]	; (80a44 <delay_micros_10+0x20>)
    80a2a:	4798      	blx	r3
    80a2c:	4605      	mov	r5, r0
-	
-	while (timer_read() < (startime + (length * 7)))
    80a2e:	e001      	b.n	80a34 <delay_micros_10+0x10>
-	{
-		timer_read();
    80a30:	4b04      	ldr	r3, [pc, #16]	; (80a44 <delay_micros_10+0x20>)
    80a32:	4798      	blx	r3
-	while (timer_read() < (startime + (length * 7)))
    80a34:	4b03      	ldr	r3, [pc, #12]	; (80a44 <delay_micros_10+0x20>)
    80a36:	4798      	blx	r3
    80a38:	ebc4 03c4 	rsb	r3, r4, r4, lsl #3
    80a3c:	442b      	add	r3, r5
    80a3e:	4298      	cmp	r0, r3
    80a40:	dbf6      	blt.n	80a30 <delay_micros_10+0xc>
-	}
    80a42:	bd38      	pop	{r3, r4, r5, pc}
    80a44:	00080a19 	.word	0x00080a19
 

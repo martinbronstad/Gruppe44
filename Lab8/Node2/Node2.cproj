@@ -192,6 +192,9 @@
     <Compile Include="Motor.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="PID.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
