@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #ifndef PID_H_
 #define PID_H_
@@ -26,7 +27,9 @@
 #define K_I 10
 #define K_D 0
 
-int solenoid_flag;
+volatile bool solenoid_flag;
+volatile bool in_game; 
+volatile bool game_init_flag;
 
 //int16_t error;
 //int16_t prev_error;
@@ -44,6 +47,13 @@ typedef struct received_data
 	uint8_t slider_left;
 	uint8_t slider_right;
 } RECEIVED_DATA;
+
+typedef struct received_game_settings
+{
+	uint8_t use_slider; // 0 for using joystick, 1 for using slider
+	uint8_t game_mode; // 0 Normal mode, 1 Arcade mode
+	uint8_t difficulty; // 1 Easy, 2 Medium, 3 Hard
+} RECEIVED_GAME_SETTINGS;
 
 typedef struct pid_data{
 	uint32_t KP;

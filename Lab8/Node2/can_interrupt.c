@@ -18,6 +18,8 @@
 #define DEBUG_INTERRUPT 0
 
 RECEIVED_DATA received_data_node1;
+RECEIVED_GAME_SETTINGS received_game_settings_node1;
+
 
 /**
  * \brief CAN0 Interrupt handler for RX, TX and bus error interrupts
@@ -53,31 +55,44 @@ void CAN0_Handler( void )
 
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
-		
-	
-		
 		for (int i = 0; i < message.data_length; i++)
 		{
 			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
 		}
-		if (message.id == 1){
+		
+		/* Joystick and slider values: */
+		if(message.id == 1){
 			received_data_node1.joystick_x = message.data[0];
 			received_data_node1.joystick_y = message.data[1];
 			received_data_node1.slider_left = message.data[2];
 			received_data_node1.slider_right = message.data[3];
 			
-			//if(DEBUG_INTERRUPT)printf("\r \n joystick x %d \r \n", received_data_node1.joystick_x);
-			//if(DEBUG_INTERRUPT)printf(" joystick y %d \r \n", received_data_node1.joystick_y);
-			//if(DEBUG_INTERRUPT)printf(" slider left %d \r \n", received_data_node1.slider_left);
-			//if(DEBUG_INTERRUPT)printf(" slider right %d \r \n", received_data_node1.slider_right);
-			
-			//pwm_set_servo(message.data[0]);
-			//pid_controller1(message.data[1]); // Need to store the value somewhere thats accessible from main
 		}
-		if (message.id == 2){
-			//solenoid_fire();
-			solenoid_flag = 1;
+		
+		/* Left button: */
+		if(message.id == 2){
+			solenoid_flag = true;
 		}
+		
+		/* Game settings: */
+		if(message.id == 3){ 
+			received_game_settings_node1.use_slider = message.data[0];
+			received_game_settings_node1.game_mode = message.data[1];
+			received_game_settings_node1.difficulty = message.data[2];
+		}
+		
+		/* Game start: */
+		if(message.id == 4){
+			if(message.data[0] == 1){
+				in_game = true;
+				game_init_flag = true;
+			}
+			else{
+				in_game = false;
+			}
+		}
+		
+		
 		//can_send(&message, 0); //REPLIES WITH THE SAME MESSAGE BACK
 		if(DEBUG_INTERRUPT)printf("\n\r");
 	}
@@ -103,5 +118,5 @@ void CAN0_Handler( void )
 	}
 	
 	NVIC_ClearPendingIRQ(ID_CAN0);
-	//sei();*/
+	//sei();
 }

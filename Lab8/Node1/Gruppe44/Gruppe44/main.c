@@ -118,28 +118,29 @@ int main(void)
 	while (1)
 	{
 		
-		get_stick_direction();
 		
 		if (Game_status.in_game){ //TODO: Check if this works or if it needs to be in_game = 1;
-		poll_new_readings();
-			
+			poll_new_readings();
+			// Update OLED while in game
 		}
 		else {
-		if (right_button){
-			Change_page();
-			right_button = false;
-		}
-		
-		if (stick_state.Y_direction == NEUTRAL){
-			neutral_check = true;
-		}
-		
-		if (neutral_check){
-			if (stick_state.Y_direction != NEUTRAL){
-			Arrow_refresh();
-			neutral_check = false;
+			
+			get_stick_direction();
+			if (right_button){
+				Change_page();
+				right_button = false;
 			}
-		}
+			
+			if (stick_state.Y_direction == NEUTRAL){
+				neutral_check = true;
+			}
+			
+			if (neutral_check){
+				if (stick_state.Y_direction != NEUTRAL){
+					Arrow_refresh();
+					neutral_check = false;
+				}
+			}
 		}
 	}
 }

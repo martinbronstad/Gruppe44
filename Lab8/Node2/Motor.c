@@ -49,8 +49,7 @@ void solenoid_init(){
 	
 	PIOC->PIO_SODR |= PIO_PC12;
 	
-	solenoid_flag = 0;
-	
+	solenoid_flag = false;
 }
 
 void solenoid_fire(){
@@ -105,4 +104,8 @@ void motor_write(value){ // input 0-200 -> output 0-100 / 0-5V & direction
 	dac_write(value);
 	// Writes from 0-4095 -> 0-5 V
 	
+}
+
+void motor_disable(){
+	PIOD->PIO_CODR |= PIO_PD9; //Disables motor
 }

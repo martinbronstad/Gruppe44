@@ -9,34 +9,14 @@
 
 void pid_init(int32_t P_factor, int32_t I_factor, int32_t D_factor, struct pid_data *pid){ // From example in lab lectures
 	
-	/*
-		kp = 10000;
-		kd = 256;
-		ki = 256;
-		
-		max_up = 100;
-		max_ud = 100;
-		max_ui = 100;
-		
-		sampling_time = 0;
-		prev_time = 0;
-		cumulative_error = 0;
-		T = 0.02;
-	*/
+	pid->KP = 0.8*SCALING_FACTOR; // 0.8 works
+	pid->KI = 0.4*SCALING_FACTOR; // 0.4
+	pid->KD = 0.1*SCALING_FACTOR; // 0.1
 	
-	// NEW VERSION:
-	
-	pid->KP = 0.8*SCALING_FACTOR; // 1.0 works
-	pid->KI = 0.4*SCALING_FACTOR; // 0.1 works but slow
-	pid->KD = 0.1*SCALING_FACTOR;
 	pid->sampling_time = sampling_interval;
 	pid->prev_error = 0;
 	pid->prev_ui = 0;
-	
-	//printf("\r\n Initial values: \r\n");
-	//printf("KP %d \r \n", pid->KP);
-	//printf("KI %d \r \n", pid->KI);
-	//printf("KD %d \r \n", pid->KD);
+
 }
 
 

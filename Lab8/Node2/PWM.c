@@ -24,22 +24,23 @@ void pwm_init(void) {
 	PWM->PWM_WPCR |= 0xFC; // SELECTS GROUP 0-6; WPRGx
 	PWM->PWM_WPCR |= PWM_WPCR_WPCMD(0); //Unlock user interface
 	
-	PWM->PWM_CLK = PWM_CLK_DIVA(1) | PWM_CLK_DIVB(1) | PWM_CLK_PREA(7) | PWM_CLK_PREB(7); //TODO: check if this is correct, MCK/128
+	PWM->PWM_CLK = PWM_CLK_DIVA(1) | PWM_CLK_PREA(7); //TODO: check if this is correct, MCK/128
 	
-	PWM->PWM_DIS = PWM_DIS_CHID5 | PWM_DIS_CHID6;
+	PWM->PWM_DIS = PWM_DIS_CHID5;
 	
 	REG_PWM_CMR5 = PWM_CMR_CPRE_CLKA; //CLOCK A, LEFT ALIGNED
-	REG_PWM_CMR6 = PWM_CMR_CPRE_CLKB; //CLOCK B, LEFT ALIGNED
 	
 	REG_PWM_CPRD5 = 0x3345; //SETS THE PERIOD TO 20MS, 58MHZ*20ms = X * CPRD
-	REG_PWM_CPRD6 = 0x3345;
 	
-	REG_PWM_CDTY5 = 0x3345; // 
-	REG_PWM_CDTY6 = 0x3345; //used to actually change pwm, 0x3345 = 0 V, 0x00 = 5V
+	REG_PWM_CDTY5 = 0x3345; // used to actually change pwm, 0x3345 = 0 V, 0x00 = 5V
 	
 
-	PWM->PWM_ENA = PWM_ENA_CHID5 | PWM_ENA_CHID6; //ENABLE
+	PWM->PWM_ENA = PWM_ENA_CHID5; //ENABLE
 	
+}
+
+void pwm_disable(){
+	PWM->PWM_DIS = PWM_ENA_CHID5; // DISABLE PWM on channel 5 and 6
 }
 
 void pwm_set(int value) {

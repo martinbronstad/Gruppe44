@@ -108,7 +108,8 @@ can_interrupt.d can_interrupt.o: .././can_interrupt.c \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h \
  .././printf-stdarg.h .././can_controller.h .././PID.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\unistd.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\unistd.h
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\unistd.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h
 
 .././can_interrupt.h:
 
@@ -333,3 +334,5 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/p
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\unistd.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\unistd.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdbool.h:

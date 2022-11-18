@@ -186,6 +186,9 @@
     <Compile Include="Game.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Game.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
