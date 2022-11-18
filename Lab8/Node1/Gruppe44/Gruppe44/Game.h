@@ -29,7 +29,9 @@ struct GAME_STATUS{
 } Game_status;
 
 enum Game_modes_enum{ARCADE, STANDARD};
-
+enum Game_difficulty_enum{EASY, MEDIUM, HARD};
+enum Game_controller_enum{JOYSTICK, SLIDER};
+	
 void start_game();
 
 void game_loss();

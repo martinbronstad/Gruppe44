@@ -13,20 +13,16 @@
 #include <avr/io.h>
 #include "util/delay.h"
 #include <math.h>
-
+#include "Game.h"
 
 struct Menu_Contents{
 	uint8_t menu_index;
 	char linedata[8][15];
 } Menu_contents;
 
+enum Menu_screens{MAIN_MENU, GAME_MODES_MENU, CONTROLLER_MENU, DIFFICULTY_MENU, GAME_OVER_MENU, PLAY_AGAIN_MENU};
 
-volatile bool main_menu_flag;
-volatile bool game_modes_flag;
-volatile bool difficulty_menu_flag;
-volatile bool game_over_flag;
-volatile bool play_again_flag;
-
+int current_menu;
 
 void flag_init();
 
