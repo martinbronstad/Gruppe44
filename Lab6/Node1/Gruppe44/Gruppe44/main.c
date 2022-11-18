@@ -99,18 +99,18 @@ int main(void)
 	while (1)
 	{
 		// CAN TEST IN LOOPBACK MODE:
-		
-		x ++;
-		can_message.data[0] = x;
 		get_stick_state();
-		can_message.data[1] = stick_state.X_state + 100;
-		can_message.data[2] = stick_state.Y_state + 100;
-		can_message.data[3] = ADC_states[2];
-		can_message.data[4] = ADC_states[3];
-		// CAN TEST TO NODE 2:
-		CAN_write_message(can_message);
-		//CAN_request_to_send(0x01);
-		_delay_ms(1000);
+		//x ++;
+		//can_message.data[0] = x;
+		//get_stick_state();
+		//can_message.data[1] = stick_state.X_state + 100;
+		//can_message.data[2] = stick_state.Y_state + 100;
+		//can_message.data[3] = ADC_states[2];
+		//can_message.data[4] = ADC_states[3];
+		//// CAN TEST TO NODE 2:
+		//CAN_write_message(can_message);
+		////CAN_request_to_send(0x01);
+		//_delay_ms(1000);
 		
 		/*
 		uint8_t test_transmit;

@@ -17,12 +17,11 @@
 
 struct Menu_Contents{
 	uint8_t menu_index;
+	volatile uint8_t current_menu;
 	char linedata[8][15];
 } Menu_contents;
 
-enum Menu_screens{MAIN_MENU, GAME_MODES_MENU, CONTROLLER_MENU, DIFFICULTY_MENU, GAME_OVER_MENU, PLAY_AGAIN_MENU};
 
-int current_menu;
 
 void flag_init();
 
@@ -33,6 +32,10 @@ void Main_menu();
 void Game_Modes_Menu();
 
 void Difficulty_Menu();
+
+void Standard_mode_Menu();
+
+void Arcade_mode_Menu();
 
 void Game_Over_Menu();
 

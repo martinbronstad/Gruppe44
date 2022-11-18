@@ -18,7 +18,6 @@
 #define DEBUG_INTERRUPT 0
 
 RECEIVED_DATA received_data_node1;
-RECEIVED_GAME_SETTINGS received_game_settings_node1;
 
 
 /**
@@ -76,9 +75,11 @@ void CAN0_Handler( void )
 		
 		/* Game settings: */
 		if(message.id == 3){ 
-			received_game_settings_node1.use_slider = message.data[0];
-			received_game_settings_node1.game_mode = message.data[1];
-			received_game_settings_node1.difficulty = message.data[2];
+			game_mode = message.data[0];
+			use_slider = message.data[1];
+			difficulty = message.data[2];
+			
+			game_init();
 		}
 		
 		/* Game start: */

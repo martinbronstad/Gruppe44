@@ -48,6 +48,7 @@ void get_stick_state(void){ //Transform the stickstates from 0 <-> 255 to -100 <
 	adc_read();
 	uint8_t raw_x = ADC_states[0];
 	uint8_t raw_y = ADC_states[1];
+	//printf("%d ", raw_y);
 	//uint8_t b = 51;
 	if (raw_x > X_neutral){
 		stick_state.X_state = (((raw_x-X_neutral) * 100 )/ (255 - X_neutral));
@@ -69,6 +70,7 @@ void get_stick_state(void){ //Transform the stickstates from 0 <-> 255 to -100 <
 
 void get_stick_direction(void){ //Checks if the output is saturated, if it is the direction is defined in an enum (0-4)
 	get_stick_state();
+	//printf(" %d",stick_state.Y_state);
 	//uint8_t raw_x = ADC_states[0];
 	//uint8_t raw_y = ADC_states[1];
 	short x_value = stick_state.X_state;
@@ -97,17 +99,7 @@ void get_stick_direction(void){ //Checks if the output is saturated, if it is th
 	}
 }
 
-void moving_average_filter_x(void){
-	
-	short moving_average = (stick_state.X_state + mov_avg_x[0] + mov_avg_x[1] + mov_avg_x[2] + mov_avg_x[3])/(5);
-	for(int i = 0; i<4; i++){
-		mov_avg_x[i+1] = mov_avg_x[i];
-	}
-	mov_avg_x[0] = stick_state.X_state;
-	//return moving_average;
-	stick_state.X_state = moving_average;
-	
-}
+
 
 void poll_new_readings(){
 	get_stick_state();

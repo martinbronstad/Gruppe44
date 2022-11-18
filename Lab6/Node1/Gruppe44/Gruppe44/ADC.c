@@ -41,6 +41,7 @@ void get_stick_state(void){ //Transform the stickstates from 0 <-> 255 to -100 <
 	adc_read();
 	uint8_t raw_x = ADC_states[0];
 	uint8_t raw_y = ADC_states[1];
+	printf("%d \r\n",raw_y);
 	//uint8_t b = 51;
 	if (raw_x > X_neutral){
 		stick_state.X_state = (((raw_x-X_neutral) * 100 )/ (255 - X_neutral));

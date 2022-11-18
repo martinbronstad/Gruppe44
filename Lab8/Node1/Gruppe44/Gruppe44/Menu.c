@@ -11,7 +11,7 @@
 
 
 void flag_init(){
-	current_menu = MAIN_MENU;
+	Menu_contents.current_menu = 0;
 }
 
 void Menu_init(){
@@ -35,7 +35,7 @@ void Main_menu(){
 	strcpy(Menu_contents.linedata[5], " ");
 	strcpy(Menu_contents.linedata[6], " ");
 	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], "LEADERBOARD");
+	strcpy(Menu_contents.linedata[8], " ");
 	Menu_contents.menu_index = 2;
 	Menu_print();
 }
@@ -79,17 +79,43 @@ void Difficulty_Menu(){
 	Menu_print();
 }
 
+void Standard_mode_Menu(){
+	strcpy(Menu_contents.linedata[1], "STANDARD MODE:");
+	strcpy(Menu_contents.linedata[2], " ");
+	strcpy(Menu_contents.linedata[3], "Score:");
+	strcpy(Menu_contents.linedata[4], " ");
+	strcpy(Menu_contents.linedata[5], " ");
+	strcpy(Menu_contents.linedata[6], " ");
+	strcpy(Menu_contents.linedata[7], " ");
+	strcpy(Menu_contents.linedata[8], " ");
+	Menu_contents.menu_index = 0;
+	Game_print();
+}
+
+void Arcade_mode_Menu(){
+	strcpy(Menu_contents.linedata[1], "Arcade MODE:");
+	strcpy(Menu_contents.linedata[2], " ");
+	strcpy(Menu_contents.linedata[3], "Time:");
+	strcpy(Menu_contents.linedata[4], " ");
+	strcpy(Menu_contents.linedata[5], " ");
+	strcpy(Menu_contents.linedata[6], " ");
+	strcpy(Menu_contents.linedata[7], " ");
+	strcpy(Menu_contents.linedata[8], " ");
+	Menu_contents.menu_index = 0;
+	Game_print();
+}
+
 void Game_Over_Menu(){
 	strcpy(Menu_contents.linedata[1], " - GAME OVER -");
-	strcpy(Menu_contents.linedata[2], "Your Time:");
-	strcpy(Menu_contents.linedata[3], "1:45");
+	strcpy(Menu_contents.linedata[2], " ");
+	strcpy(Menu_contents.linedata[3], " ");
 	strcpy(Menu_contents.linedata[4], " ");
-	strcpy(Menu_contents.linedata[5], "Leaderboard:");
-	strcpy(Menu_contents.linedata[6], "1st");
+	strcpy(Menu_contents.linedata[5], " ");
+	strcpy(Menu_contents.linedata[6], " ");
 	strcpy(Menu_contents.linedata[7], " ");
 	strcpy(Menu_contents.linedata[8], "Exit to menu");
 	Menu_contents.menu_index = 7;
-	Menu_print();
+	Game_print();
 }
 
 
@@ -122,30 +148,11 @@ void Arrow_refresh(){
 	int prev_menu_index = Menu_contents.menu_index;
 	
 	// MAIN MENU LOGIC:
-	if(current_menu == MAIN_MENU){
-		if (prev_menu_index == 2){
-			if (stick_state.Y_direction == UP || stick_state.Y_direction == DOWN){
-				Menu_contents.menu_index = 7;
-				OLED_go_to_pos(Menu_contents.menu_index, 0);
-				Menu_print_arrow();
-				OLED_go_to_pos(prev_menu_index, 0);
-				Menu_no_arrow();
-			}
-		}
-		
-		if (prev_menu_index == 7){
-			if (stick_state.Y_direction == UP || stick_state.Y_direction == DOWN){
-				Menu_contents.menu_index = 2;
-				OLED_go_to_pos(Menu_contents.menu_index, 0);
-				Menu_print_arrow();
-				OLED_go_to_pos(prev_menu_index, 0);
-				Menu_no_arrow();
-			}
-		}
+	if(Menu_contents.current_menu == 0){
 	}
 	
 	// GAME MODES MENU LOGIC:
-	if (current_menu == GAME_MODES_MENU){
+	if (Menu_contents.current_menu == 1){
 		
 		if (prev_menu_index == 2){
 			if (stick_state.Y_direction == DOWN){
@@ -201,7 +208,7 @@ void Arrow_refresh(){
 	}
 	
 	// GAME MODES MENU LOGIC:
-	if (current_menu == CONTROLLER_MENU){
+	if (Menu_contents.current_menu == 2){
 		
 		if (prev_menu_index == 2){
 			if (stick_state.Y_direction == DOWN){
@@ -257,7 +264,7 @@ void Arrow_refresh(){
 	}
 	
 	// DIFFICULTY MENU LOGIC:
-	if (current_menu == DIFFICULTY_MENU){
+	if (Menu_contents.current_menu == 3){
 		if (prev_menu_index == 2){
 			if (stick_state.Y_direction == UP){
 				Menu_contents.menu_index = 7;
@@ -343,35 +350,46 @@ void Menu_print(){
 	Menu_print_arrow();
 }
 
+void Game_print(){
+	OLED_home();
+	OLED_printf(Menu_contents.linedata[1]);
+	for (int i = 0; i < 8; i++){
+		OLED_go_to_pos(i, 0);
+		OLED_printf(Menu_contents.linedata[i+1]);
+		}
+}
+
 void Change_page(){
 	int current_index = Menu_contents.menu_index;
 	
-	if (current_menu == MAIN_MENU){
+	//printf("%d\r\n",Menu_contents.current_menu);
+	if (Menu_contents.current_menu == 0){
 		if (current_index == 2){
 			OLED_reset();
 			Game_Modes_Menu();
 			Game_Modes_Menu();
-			current_menu = GAME_MODES_MENU;
-			return;
+			Menu_contents.current_menu++;
 		}
+		return;
 	}
 	
-	if (current_menu == GAME_MODES_MENU){
+	if (Menu_contents.current_menu == 1){
+
 		if (current_index == 2){ // Normal mode
 			OLED_reset();
-			Difficulty_Menu();
-			Difficulty_Menu();
-			Game_status.game_mode = STANDARD;
-			current_menu = CONTROLLER_MENU;
+			Controller_Menu();
+			Controller_Menu();
+			game_mode1 = 0; //NORMAL
+			Menu_contents.current_menu++;
 			return;
 		}
 		
 		if (current_index == 3){ // Arcade mode
 			OLED_reset();
-			Difficulty_Menu();
-			Difficulty_Menu();
-			Game_status.game_mode = ARCADE;
-			current_menu = CONTROLLER_MENU;
+			Controller_Menu();
+			Controller_Menu();
+			game_mode1 = 1; //ARCADE
+			Menu_contents.current_menu++;
 			return;
 		}
 		
@@ -379,79 +397,83 @@ void Change_page(){
 			OLED_reset();
 			Main_menu();
 			Main_menu();
-			current_menu = MAIN_MENU;
+			Menu_contents.current_menu--;
 			return;
 		}
 	}
 	
-	if (current_menu == CONTROLLER_MENU){
+	if (Menu_contents.current_menu == 2){
 		if (current_index == 2){ // Joystick
 			OLED_reset();
 			Difficulty_Menu();
 			Difficulty_Menu();
-			Game_status.controller_setting = JOYSTICK;
-			current_menu = DIFFICULTY_MENU;
+			controller_setting = 0; //JOYSTICK
+			Menu_contents.current_menu++;
 			return;
 		}
 		
-		if (current_index == 3){ // Arcade mode
+		if (current_index == 3){
 			OLED_reset();
 			Difficulty_Menu();
 			Difficulty_Menu();
-			Game_status.controller_setting = SLIDER;
-			current_menu = DIFFICULTY_MENU;
+			controller_setting = 1; //SLIDER
+			Menu_contents.current_menu++;
 			return;
 		}
 		
 		if (current_index == 7){
 			OLED_reset();
-			Main_menu();
-			Main_menu();
-			current_menu = GAME_MODES_MENU;
+			Game_Modes_Menu();
+			Game_Modes_Menu();
+			Menu_contents.current_menu--;
 			return;
 		}
 	}
 	
-	if (current_menu == DIFFICULTY_MENU){ //CHANGE FROM GAME
+	if (Menu_contents.current_menu == 3){
 		if (current_index == 2){ // EASY
 			OLED_reset();
-			Game_Over_Menu(); 
-			Game_status.difficulty = EASY;
-			current_menu = GAME_OVER_MENU;
+			difficulty = 0;
+			printf("%d \r\n",game_mode1);
+			Menu_contents.current_menu++;
+			start_game();
 			return;
 		}
 		
 		if (current_index == 3){ // MEDIUM
 			OLED_reset();
-			Game_Over_Menu();
-			Game_status.difficulty = MEDIUM;
-			current_menu = GAME_OVER_MENU;
+			difficulty = 1;
+			Menu_contents.current_menu++;
+			start_game();
 			return;
 		}
 		
 		if (current_index == 4){ // HARD
 			OLED_reset();
-			Game_Over_Menu();
-			Game_status.difficulty = HARD;
-			current_menu = GAME_OVER_MENU;
+			difficulty = 2;
+			Menu_contents.current_menu++;
+			start_game();
 			return;
 		}
 		
 		if (current_index == 7){
 			OLED_reset();
-			Game_Modes_Menu();
-			Game_Modes_Menu();
-			current_menu = CONTROLLER_MENU;
+			Controller_Menu();
+			Controller_Menu();
+			Menu_contents.current_menu--;
 			return;
 		}
 	}
 	
-	if (current_menu == GAME_OVER_MENU){
+	
+	
+	
+	if (Menu_contents.current_menu == 5){
 		if (current_index == 7){
 			OLED_reset();
 			Main_menu();
 			Main_menu();
-			current_menu = MAIN_MENU;
+			Menu_contents.current_menu = 0;
 			return;
 		}
 	}

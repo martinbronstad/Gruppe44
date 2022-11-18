@@ -28,7 +28,6 @@ void adc_read(void);
 void adc_calibrate(void);
 void get_stick_state(void);
 void get_stick_direction(void);
-void moving_average_filter_x(void);
 void poll_new_readings();
 
 #endif /* ADC_H_ */

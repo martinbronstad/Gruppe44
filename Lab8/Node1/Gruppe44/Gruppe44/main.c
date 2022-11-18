@@ -34,17 +34,18 @@
 #define id_game_settings 3
 #define length_game_settings 8
 
-volatile bool right_button = false;
-volatile bool left_button = false;
-bool neutral_check = false;
+uint8_t right_button = 0;
+uint8_t left_button = 0;
+uint8_t neutral_check = 0;
 // #define different id values
 
 struct Can_Message can_message_buttons;
 
-ISR(INT0_vect){
-	//printf("\r\nRight button\r\n");
 
-	right_button = true;
+ISR(INT0_vect){
+	printf("\r\nRight button\r\n");
+
+	right_button = 1;
 	
 	//Change_page();
 	//OLED_reset();
@@ -52,13 +53,13 @@ ISR(INT0_vect){
 	//_delay_ms(100);
 }
 ISR(INT1_vect){
-	//printf("\r\nLeft button\r\n");
-	if(Game_status.in_game){
+	printf("\r\nLeft button\r\n");
+	if(in_game){
 		can_message_buttons.data[0] = 1;
 		CAN_write_message(can_message_buttons);
 	}
 	else{
-		left_button = true;
+		left_button = 1;
 	}
 }
 ISR(INT2_vect){
@@ -67,7 +68,7 @@ ISR(INT2_vect){
 	_delay_ms(100);
 	struct Can_Message rec_message = CAN_read_message();
 	if(rec_message.id != 0 & rec_message.id < 31){
-		//printf("len: %i, id: %i, data: %i \r \n", rec_message.length, rec_message.id, rec_message.data[4]);
+		printf("len: %i, id: %i, data: %i \r \n", rec_message.length, rec_message.id, rec_message.data[4]);
 		printf("len: %i, id: %i \r \n", rec_message.length, rec_message.id);
 		for (int i = 0; i < rec_message.length; i++){
 			printf("DATA: %i \r \n", rec_message.data[i]);
@@ -75,11 +76,11 @@ ISR(INT2_vect){
 		}
 	}
 	
-	if (rec_message.id == 4){
-		Game_status.in_game = true;
+	if ((rec_message.id == 4) & (rec_message.data[0] == 1)){
+		in_game = 1;
 	}
-	if (rec_message.id == 5){
-		update_game_score(rec_message.data[0]);
+	if ((rec_message.id == 5) & (rec_message.length > 0)){
+		update_game_score();
 	}
 	
 }
@@ -103,11 +104,10 @@ int main(void)
 	
 	flag_init();
 	
-	timer_init();
 	
 	Main_menu();
 
-	Game_status.in_game = false;
+	in_game = 0;
 	struct Can_Message can_message; //DEBUG TEST MESSAGE
 	can_message.id = id_joystick_slider;
 	can_message.length = lenght_joystick_slider;
@@ -119,26 +119,27 @@ int main(void)
 	{
 		
 		
-		if (Game_status.in_game){ //TODO: Check if this works or if it needs to be in_game = 1;
+		if (in_game == 1){ //TODO: Check if this works or if it needs to be in_game = 1;
 			poll_new_readings();
 			// Update OLED while in game
+			//printf("%d \r\n",Game_status.in_game);
 		}
 		else {
-			
 			get_stick_direction();
 			if (right_button){
 				Change_page();
-				right_button = false;
+				right_button = 0;
 			}
 			
 			if (stick_state.Y_direction == NEUTRAL){
-				neutral_check = true;
+				neutral_check = 1;
 			}
 			
-			if (neutral_check){
+			if (neutral_check == 1){
 				if (stick_state.Y_direction != NEUTRAL){
+					//printf("Refresh");
 					Arrow_refresh();
-					neutral_check = false;
+					neutral_check = 0;
 				}
 			}
 		}

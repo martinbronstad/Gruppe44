@@ -197,9 +197,6 @@
     <Compile Include="SRAM.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Timer.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="XMEM.c">
       <SubType>compile</SubType>
     </Compile>

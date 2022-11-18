@@ -23,9 +23,9 @@
 
 #define sampling_interval 20
 
-#define K_P 5
-#define K_I 10
-#define K_D 0
+#define K_P 0.8
+#define K_I 0.4
+#define K_D 0.1
 
 volatile bool solenoid_flag;
 volatile bool in_game; 
@@ -48,12 +48,12 @@ typedef struct received_data
 	uint8_t slider_right;
 } RECEIVED_DATA;
 
-typedef struct received_game_settings
-{
-	uint8_t use_slider; // 0 for using joystick, 1 for using slider
-	uint8_t game_mode; // 0 Normal mode, 1 Arcade mode
-	uint8_t difficulty; // 1 Easy, 2 Medium, 3 Hard
-} RECEIVED_GAME_SETTINGS;
+// typedef struct received_game_settings
+// {
+// 	uint8_t use_slider; // 0 for using joystick, 1 for using slider
+// 	uint8_t game_mode; // 0 Normal mode, 1 Arcade mode
+// 	uint8_t difficulty; // 1 Easy, 2 Medium, 3 Hard
+// } RECEIVED_GAME_SETTINGS;
 
 typedef struct pid_data{
 	uint32_t KP;
@@ -66,6 +66,9 @@ typedef struct pid_data{
 } PID_DATA;
 
 
+uint8_t use_slider; // 0 for using joystick, 1 for using slider
+uint8_t game_mode; // 0 Normal mode, 1 Arcade mode
+uint8_t difficulty; // 1 Easy, 2 Medium, 3 Hard
 
 void pid_init(int32_t P_factor, int32_t I_factor, int32_t D_factor, struct pid_data *pid);
 
