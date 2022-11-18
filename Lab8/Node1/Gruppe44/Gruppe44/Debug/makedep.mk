@@ -22,5 +22,7 @@ SPI.c
 
 SRAM.c
 
+Timer.c
+
 XMEM.c
 

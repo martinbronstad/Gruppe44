@@ -166,6 +166,9 @@
     <Compile Include="Game.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Game.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Interruptcontroller.c">
       <SubType>compile</SubType>
     </Compile>
@@ -192,6 +195,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SRAM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="XMEM.c">

@@ -4,6 +4,8 @@
 #include <avr/io.h>
 #include <unistd.h>
 
+// Functions taken from ATmega datasheet, page 172-174
+
 void USART_Init( unsigned int ubrr )
 {
 	/* Set baud rate */

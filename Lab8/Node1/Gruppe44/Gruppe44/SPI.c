@@ -13,7 +13,7 @@ void SPI_init(void)
 	PORTB |= (1 << PB4); 
 }
 
-uint8_t SPI_transmit(uint8_t cData)
+uint8_t SPI_transmit(uint8_t cData) //Code taken from ATmega 162/V datasheet, page 160-161
 {
 	uint8_t result;
 	/* Start transmission */

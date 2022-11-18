@@ -47,6 +47,7 @@ C_SRCS +=  \
 ../OLED.c \
 ../SPI.c \
 ../SRAM.c \
+../Timer.c \
 ../XMEM.c
 
 
@@ -67,6 +68,7 @@ Menu.o \
 OLED.o \
 SPI.o \
 SRAM.o \
+Timer.o \
 XMEM.o
 
 OBJS_AS_ARGS +=  \
@@ -80,6 +82,7 @@ Menu.o \
 OLED.o \
 SPI.o \
 SRAM.o \
+Timer.o \
 XMEM.o
 
 C_DEPS +=  \
@@ -93,6 +96,7 @@ Menu.d \
 OLED.d \
 SPI.d \
 SRAM.d \
+Timer.d \
 XMEM.d
 
 C_DEPS_AS_ARGS +=  \
@@ -106,6 +110,7 @@ Menu.d \
 OLED.d \
 SPI.d \
 SRAM.d \
+Timer.d \
 XMEM.d
 
 OUTPUT_FILE_PATH +=Gruppe44.elf
@@ -186,6 +191,13 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./SRAM.o: .././SRAM.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./Timer.o: .././Timer.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -1,5 +1,6 @@
 #include <stdlib.h>
-#include <stdint.h> // Included to remove errors - not a part of the test code
+#include <stdint.h> // Included to remove errors - not a part of the test code 
+//TAKEN FROM BLACKBOARD,
     void SRAM_test(void)
     {
 		volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM

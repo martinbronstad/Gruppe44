@@ -16,6 +16,8 @@
 #include "CAN.h"
 #include "util/delay.h"
 #include <stdbool.h> 
+#include "Game.h"
+
 
 #define FOSC 1843200// Clock Speed
 #define BAUD 9600
@@ -34,7 +36,6 @@
 
 volatile bool right_button = false;
 volatile bool left_button = false;
-volatile bool in_game = true;
 bool neutral_check = false;
 // #define different id values
 
@@ -52,11 +53,13 @@ ISR(INT0_vect){
 }
 ISR(INT1_vect){
 	//printf("\r\nLeft button\r\n");
-	if(in_game){
+	if(Game_status.in_game){
 		can_message_buttons.data[0] = 1;
 		CAN_write_message(can_message_buttons);
 	}
-	left_button = true;
+	else{
+		left_button = true;
+	}
 }
 ISR(INT2_vect){
 	//printf("\r\n Element %u", OLED_contents.menu_index);
@@ -72,12 +75,12 @@ ISR(INT2_vect){
 		}
 	}
 	
-	///7if (rec.message.id == 5) {
-	//	game_loss();
-		
-		
-		
-//	}
+	if (rec_message.id == 4){
+		Game_status.in_game = true;
+	}
+	if (rec_message.id == 5){
+		update_game_score(rec_message.data[0]);
+	}
 	
 }
 
@@ -99,8 +102,12 @@ int main(void)
 	CAN_init();
 	
 	flag_init();
-	Main_menu();
 	
+	timer_init();
+	
+	Main_menu();
+
+	Game_status.in_game = false;
 	struct Can_Message can_message; //DEBUG TEST MESSAGE
 	can_message.id = id_joystick_slider;
 	can_message.length = lenght_joystick_slider;
@@ -113,9 +120,12 @@ int main(void)
 		
 		get_stick_direction();
 		
+		if (Game_status.in_game){ //TODO: Check if this works or if it needs to be in_game = 1;
 		poll_new_readings();
-		
-		if (right_button){ // Add "AND IN MENU" logic, as in not in a game
+			
+		}
+		else {
+		if (right_button){
 			Change_page();
 			right_button = false;
 		}
@@ -130,6 +140,6 @@ int main(void)
 			neutral_check = false;
 			}
 		}
-
+		}
 	}
 }

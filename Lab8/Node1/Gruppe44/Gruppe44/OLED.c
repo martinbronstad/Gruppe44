@@ -6,7 +6,7 @@
 #include <string.h>
 #include "OLED.h"
 
-void OLED_init()
+void OLED_init() // Init function is taken from OLED LY190-128064.pdf, from blackboard
  {
 	 OLED_write_c(0xae); // display off
 	 OLED_write_c(0xa1); //segment remap

@@ -1,7 +1,7 @@
 #include "CAN.h"
 
 
-uint8_t CAN_init ()
+uint8_t CAN_init () // Some of these function are taken from Blackboard in the file mcp2515.h
 {
 	uint8_t value ;
 	SPI_init () ; // Initialize SPI
