@@ -14,7 +14,7 @@
 #define PID_H_
 
 #define SCALING_FACTOR  1000
-#define encoder_range 8500 // Box 8 0-8000, Box 15 0-1900, Box 14 0-8700, box 19 0-1800
+#define encoder_range 1400 // Box 8 0-8000, Box 15 0-1900, Box 14 0-8700, box 19 0-1800 Blue box 0-1400
 
 #define max_u SCALING_FACTOR*100 // Scaling factor * 100
 #define max_up SCALING_FACTOR*60

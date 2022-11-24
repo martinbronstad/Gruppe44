@@ -28,11 +28,10 @@ Flags: game running(playing/not playing), menu status(Game,Menu,results), Game l
 */
 
 #include <stdbool.h>
-#include "Menu.h"
-#include "OLED.h"
+
 #include "ADC.h"
 #include "Game.h"
-
+//#include "Menu.h"
 
 void start_game(){
 	
@@ -45,6 +44,9 @@ void start_game(){
 	Game_start_message.length = 3;
 	Game_start_message.id = 3;
 	CAN_write_message(Game_start_message);
+	//printf("%d ", game_mode1);
+	//printf("%d ", controller_setting);
+	//printf("%d ", difficulty);
 	
 	if (game_mode1 == 0){
 		Standard_mode_Menu();
@@ -60,35 +62,36 @@ void game_loss(){
 	Game_stop_message.id = 4;
 	Game_stop_message.length = 1;
 	Game_stop_message.data[0] = 0;
-	CAN_write_message(Game_stop_message);
+	CAN_write_message(Game_stop_message);	
+}
+
+void game_stop(uint8_t mode, uint8_t score){
+	
 	in_game = 0;
-	Menu_contents.current_menu = 5;	
 	Game_Over_Menu();
 	
 	if (game_mode1 == 0){
-		//PRINT SCORE
+		//printf("LOST GAME1");
 		OLED_go_to_pos(2, 0);
 		OLED_printf( "Score:");
-		char bokstav = score1;
-		OLED_print_c(score1);
+		OLED_print_num(score-2);
 	}
 	else{
 		//PRINT TIMER
+		//printf("LOST GAME2");
+		//printf("%d ", mode);
 		OLED_go_to_pos(2, 0);
 		OLED_printf( "Time:");
 		OLED_print_c('?');
 	}
-	
 }
-
-void update_game_score(){
+void update_game_score(uint8_t score){
 	
-	printf("%d \r \n", score1);
-	if (game_mode1 == 0) { //TODO: weird values on score1, will try to fix before evaluation
-		score1 ++;
-		if (score1 < 10) {
-		OLED_go_to_pos(2, 60);
-		OLED_print_c(score1);
+	//printf("%d \r \n", score);
+	if (game_mode1 == 0) {
+		if (score < 9) {
+		OLED_go_to_pos(2, 50);
+		OLED_print_num(score-2);
 		}
 		else{
 		game_loss();

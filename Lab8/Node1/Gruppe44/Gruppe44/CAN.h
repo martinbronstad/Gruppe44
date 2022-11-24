@@ -192,17 +192,17 @@ uint8_t CAN_init ();
 
 uint8_t CAN_read ( uint8_t address );
 
-CAN_write(uint8_t address, uint8_t data );
+void CAN_write(uint8_t address, uint8_t data );
 
-CAN_request_to_send( uint8_t PortNumber );
+void CAN_request_to_send( uint8_t PortNumber );
 
-CAN_bit_modify( uint8_t data , uint8_t data_byte, uint8_t mask_byte);
+void CAN_bit_modify( uint8_t data , uint8_t data_byte, uint8_t mask_byte);
 
-CAN_reset();
+void CAN_reset();
 
-CAN_read_status();
+void CAN_read_status();
 
-CAN_write_message(struct Can_Message message);
+void CAN_write_message(struct Can_Message message);
 
 struct Can_Message CAN_read_message();
 

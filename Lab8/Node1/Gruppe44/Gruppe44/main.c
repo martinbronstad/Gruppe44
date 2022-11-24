@@ -7,16 +7,16 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "Communication.h"
-#include "ADC.h"
-#include "OLED.h"
-//#include <time.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "Communication.h"
+#include "ADC.h"
+//#include "OLED.h"
+#include <time.h>
 #include "CAN.h"
-#include "util/delay.h"
-#include <stdbool.h> 
+//#include <stdbool.h> 
 #include "Game.h"
+//#include "Menu.h"
 
 
 #define FOSC 1843200// Clock Speed
@@ -67,20 +67,24 @@ ISR(INT2_vect){
 	
 	_delay_ms(100);
 	struct Can_Message rec_message = CAN_read_message();
-	if(rec_message.id != 0 & rec_message.id < 31){
-		printf("len: %i, id: %i, data: %i \r \n", rec_message.length, rec_message.id, rec_message.data[4]);
-		printf("len: %i, id: %i \r \n", rec_message.length, rec_message.id);
-		for (int i = 0; i < rec_message.length; i++){
-			printf("DATA: %i \r \n", rec_message.data[i]);
-			_delay_ms(10);
-		}
-	}
+	//if(rec_message.id != 0 & rec_message.id < 31){
+		//printf("len: %i, id: %i, data: %i \r \n", rec_message.length, rec_message.id, rec_message.data[4]);
+		//printf("len: %i, id: %i \r \n", rec_message.length, rec_message.id);
+	//	for (int i = 0; i < rec_message.length; i++){
+			//printf("DATA: %i \r \n", rec_message.data[i]);
+	//		_delay_ms(10);
+	//	}
+	//}
 	
 	if ((rec_message.id == 4) & (rec_message.data[0] == 1)){
 		in_game = 1;
 	}
 	if ((rec_message.id == 5) & (rec_message.length > 0)){
-		update_game_score();
+		update_game_score(rec_message.data[0]);
+	}
+	if ((rec_message.id == 6) & (rec_message.length > 0)){
+		
+		game_stop(rec_message.data[0], rec_message.data[1]);
 	}
 	
 }

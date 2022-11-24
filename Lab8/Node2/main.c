@@ -29,7 +29,7 @@ int main(void)
 	//pwm_init();
 	adc_init();
 	timer_init();
-	game_init();
+	//game_init();
 	dac_init();
 	//motor_init();
 	solenoid_init();
@@ -61,18 +61,16 @@ int main(void)
 			game_check_loss();
 			
 			if (timer_ms_read() - prev_time_reading >= sampling_interval){ // run IF-loop each 0.02 seconds
-				
 				// Joystick control:
 				if(use_slider == 0){
 					pid_controller1(received_data_node1.joystick_y, &pid_data1);
-					
 				}
 				else{ // Slider control:
 					pid_controller1((received_data_node1.slider_right)*0.78, &pid_data1); // value*0.78: 0-255 -> 0-200
 				}
 				
 				//pid_controller1(received_data_node1.joystick_y, &pid_data1);
-				//pwm_set_servo(received_data_node1.joystick_x);
+				pwm_set_servo(received_data_node1.joystick_x);
 				prev_time_reading = timer_ms_read();
 				
 				if (solenoid_flag){

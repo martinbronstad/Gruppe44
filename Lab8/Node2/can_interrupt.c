@@ -89,7 +89,7 @@ void CAN0_Handler( void )
 				game_init_flag = true;
 			}
 			else{
-				in_game = false;
+				game_stop();
 			}
 		}
 		

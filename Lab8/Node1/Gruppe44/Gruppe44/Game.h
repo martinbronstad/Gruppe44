@@ -11,8 +11,8 @@
 
 
 
-#include "Menu.h"
 #include "CAN.h"
+
 
 uint8_t in_game;
 uint8_t score1;
@@ -20,7 +20,6 @@ uint8_t game_time;
 uint8_t game_mode1;
 uint8_t controller_setting;
 uint8_t difficulty;
-uint8_t max_time;
 
 
 
@@ -42,9 +41,8 @@ void start_game();
 
 void game_loss();
 
-void update_game_score();
+void update_game_score(uint8_t score);
 
-void update_game_time();
 
 
 

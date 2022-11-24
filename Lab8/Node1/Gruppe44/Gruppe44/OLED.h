@@ -1,15 +1,17 @@
+#ifndef OLED_H_
+#define OLED_H_
 
-struct OLED_Contents{
-	uint8_t menu_index;
-	char line_0[15];
-	char line_1[15];
-	char line_2[15];
-	char line_3[15];
-	char line_4[15];
-	char line_5[15];
-	char line_6[15];
-	char line_7[15];
-} OLED_contents;
+// #include <avr/io.h>
+// #include <avr/interrupt.h>
+// #include <unistd.h>
+// #include <stdio.h>
+#include <stdlib.h>
+#include <avr/io.h>
+#include "util/delay.h"
+#include "fonts.h"
+#include <avr/pgmspace.h>
+#include <string.h>
+
 
 void OLED_init();
 
@@ -27,6 +29,8 @@ void OLED_home();
 
 void OLED_print_c(uint8_t letter);
 
+void OLED_print_num(uint8_t num);
+
 void OLED_printf(char text[]);
 
 void OLED_print_arrow();
@@ -36,3 +40,10 @@ void OLED_no_arrow();
 void OLED_menu_print();
 
 void OLED_reset();
+
+
+#endif /* OLED_H_ */
+
+
+
+

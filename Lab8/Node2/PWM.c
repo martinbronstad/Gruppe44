@@ -11,7 +11,7 @@
 #include "sam.h"
 #include "uart.h"
 
-
+int prev_pwm;
 
 void pwm_init(void) {
 	
@@ -40,7 +40,9 @@ void pwm_init(void) {
 }
 
 void pwm_disable(){
-	PWM->PWM_DIS = PWM_ENA_CHID5; // DISABLE PWM on channel 5 and 6
+	
+	//PWM->PWM_DIS = PWM_ENA_CHID5; //ENABLE
+	REG_PWM_CDTY5 = 0x3345;
 }
 
 void pwm_set(int value) {
@@ -59,8 +61,13 @@ void pwm_set(int value) {
 void pwm_set_servo(int value){
 	//SETS THE PWM VALUE BASED OF JOYSTICK, GETS 0-200 in, ~591-1378 out
 	
-	value = value*4 + 502; // Calculated value 591
-	
-	pwm_set(value);
+	if ((prev_pwm < value + 5) & (prev_pwm > value-5)){
+		return;
+	}
+	else{
+		prev_pwm = value;
+		value = value*4 + 502; // Calculated value 591
+		pwm_set(value);
+	}
 	
 }

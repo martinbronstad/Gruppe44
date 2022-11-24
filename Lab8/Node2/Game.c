@@ -42,20 +42,33 @@ void game_init(){
 	//TC0->TC_CHANNEL->TC_CCR |= TC_CCR_SWTRG; //RESETS TIMER
 }
 
+void game_stop(){
+	stop_message.id = 6;
+	stop_message.data_length = 2;
+	stop_message.data[0] = game_mode;
+	stop_message.data[1] = score;
+	can_send(&stop_message, 0);
+	in_game = 0;
+	
+}
+
 
 void game_check_loss(){
 	
 	int value = adc_read();
 	if (value < IR_threshold){
+		//printf("C1");
 		if ((timer_read() - time_over_threshold) >  noise_delay){
+			//printf("CHE2");
 			if ((timer_read() - previous_time) > bounce_delay){
 				IR_flag = 0;
 			}
 			if (IR_flag == 0){
 				IR_flag = 1;
+				score ++;
 				score_message.id = 5;
 				score_message.data_length = 1;
-				score_message.data[0] = 1;
+				score_message.data[0] = score;
 				can_send(&score_message, 0); // Send can message for each
 				printf("SCORED3");
 			}

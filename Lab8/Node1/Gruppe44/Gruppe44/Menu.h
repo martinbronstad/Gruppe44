@@ -11,9 +11,13 @@
 
 #include <stdlib.h>
 #include <avr/io.h>
-#include "util/delay.h"
-#include <math.h>
+//#include <math.h>
+//#include <stdbool.h>
+//#include "util/delay.h"
 #include "Game.h"
+//#include "OLED.h"
+#include "ADC.h"
+#include "Menu_strings.h"
 
 struct Menu_Contents{
 	uint8_t menu_index;
@@ -22,10 +26,7 @@ struct Menu_Contents{
 } Menu_contents;
 
 
-
 void flag_init();
-
-void Menu_init();
 
 void Main_menu();
 
@@ -47,7 +48,14 @@ void Arrow_refresh();
 
 void Menu_print();
 
+void Game_print();
+
 void Change_page();
 
 
+
 #endif /* MENU_H_ */
+
+
+
+

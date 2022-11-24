@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <avr/io.h>
 #include "util/delay.h"
@@ -5,6 +6,7 @@
 #include <avr/pgmspace.h>
 #include <string.h>
 #include "OLED.h"
+
 
 void OLED_init() // Init function is taken from OLED LY190-128064.pdf, from blackboard
  {
@@ -68,6 +70,13 @@ void OLED_print_c(uint8_t letter){
 		uint8_t address = pgm_read_byte(&(font8[(letter - 0x20)][i]));
 		OLED_write_d(address);
 		}
+}
+
+void OLED_print_num(uint8_t num){
+	for (uint8_t i = 0; i < 8; i++){
+		uint8_t address = pgm_read_byte(&(font8[(num + 0x12)][i]));
+		OLED_write_d(address);
+	}
 }
 
 void OLED_printf(char text[]){

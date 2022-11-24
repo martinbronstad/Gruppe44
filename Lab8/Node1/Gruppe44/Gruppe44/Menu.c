@@ -4,118 +4,92 @@
  * Created: 07.11.2022 13:15:00
  *  Author: marbron
  */ 
-#include <stdbool.h> 
+
 #include "Menu.h"
-#include "OLED.h"
-#include "ADC.h"
 
 
 void flag_init(){
 	Menu_contents.current_menu = 0;
 }
 
-void Menu_init(){
-	strcpy(Menu_contents.linedata[1], "-----MENU-----");
-	strcpy(Menu_contents.linedata[2], "element 1");
-	strcpy(Menu_contents.linedata[3], "element 2");
-	strcpy(Menu_contents.linedata[4], "element 3");
-	strcpy(Menu_contents.linedata[5], "element 4");
-	strcpy(Menu_contents.linedata[6], "element 5");
-	strcpy(Menu_contents.linedata[7], "element 6");
-	strcpy(Menu_contents.linedata[8], "element 7");
-	Menu_contents.menu_index = 1;
-	Menu_print();
-}
-
 void Main_menu(){
-	strcpy(Menu_contents.linedata[1], " - MAIN MENU -");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], "PLAY");
-	strcpy(Menu_contents.linedata[4], " ");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], " ");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[2])));
+	strcpy_P(Menu_contents.linedata[2], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[3])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[6], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[7], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[0])));
 	Menu_contents.menu_index = 2;
+	Menu_contents.current_menu = 0;
 	Menu_print();
 }
 
 void Game_Modes_Menu(){
-	strcpy(Menu_contents.linedata[1], "- GAME MODES: - ");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], "Normal mode");
-	strcpy(Menu_contents.linedata[4], "Arcade mode");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], "Back");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[4])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[5])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[6])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[1])));
 	Menu_contents.menu_index = 2;
+	Menu_contents.current_menu = 1;
 	Menu_print();
 }
 
 void Controller_Menu(){
-	strcpy(Menu_contents.linedata[1], "- Controller: - ");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], "Joystick");
-	strcpy(Menu_contents.linedata[4], "Sliders");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], "Back");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[7])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[8])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[9])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[1])));
 	Menu_contents.menu_index = 2;
+	Menu_contents.current_menu = 2;
 	Menu_print();
 }
 
 void Difficulty_Menu(){
-	strcpy(Menu_contents.linedata[1], " - DIFFICULTY - ");
-	strcpy(Menu_contents.linedata[2], "");
-	strcpy(Menu_contents.linedata[3], "Easy");
-	strcpy(Menu_contents.linedata[4], "Normal");
-	strcpy(Menu_contents.linedata[5], "Hard");
-	strcpy(Menu_contents.linedata[6], "");
-	strcpy(Menu_contents.linedata[7], "");
-	strcpy(Menu_contents.linedata[8], "Back");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[10])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[11])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[12])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[13])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[1])));
 	Menu_contents.menu_index = 2;
+	Menu_contents.current_menu = 3;
 	Menu_print();
 }
 
 void Standard_mode_Menu(){
-	strcpy(Menu_contents.linedata[1], "STANDARD MODE:");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], "Score:");
-	strcpy(Menu_contents.linedata[4], " ");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], " ");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[14])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[16])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[0])));
 	Menu_contents.menu_index = 0;
+	Menu_contents.current_menu = 4;
 	Game_print();
 }
 
 void Arcade_mode_Menu(){
-	strcpy(Menu_contents.linedata[1], "Arcade MODE:");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], "Time:");
-	strcpy(Menu_contents.linedata[4], " ");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], " ");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[15])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[16])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[0])));
 	Menu_contents.menu_index = 0;
+	Menu_contents.current_menu = 4;
 	Game_print();
 }
 
 void Game_Over_Menu(){
-	strcpy(Menu_contents.linedata[1], " - GAME OVER -");
-	strcpy(Menu_contents.linedata[2], " ");
-	strcpy(Menu_contents.linedata[3], " ");
-	strcpy(Menu_contents.linedata[4], " ");
-	strcpy(Menu_contents.linedata[5], " ");
-	strcpy(Menu_contents.linedata[6], " ");
-	strcpy(Menu_contents.linedata[7], " ");
-	strcpy(Menu_contents.linedata[8], "Exit to menu");
+	strcpy_P(Menu_contents.linedata[1], (PGM_P)pgm_read_word(&(menu_string_table[17])));
+	strcpy_P(Menu_contents.linedata[3], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[4], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[5], (PGM_P)pgm_read_word(&(menu_string_table[0])));
+	strcpy_P(Menu_contents.linedata[8], (PGM_P)pgm_read_word(&(menu_string_table[18])));
+	Menu_contents.current_menu = 5;
 	Menu_contents.menu_index = 7;
-	Game_print();
+	Menu_print();
 }
 
 
@@ -365,10 +339,10 @@ void Change_page(){
 	//printf("%d\r\n",Menu_contents.current_menu);
 	if (Menu_contents.current_menu == 0){
 		if (current_index == 2){
+			//printf("%d\r\n",Menu_contents.current_menu);
 			OLED_reset();
 			Game_Modes_Menu();
 			Game_Modes_Menu();
-			Menu_contents.current_menu++;
 		}
 		return;
 	}
@@ -380,7 +354,6 @@ void Change_page(){
 			Controller_Menu();
 			Controller_Menu();
 			game_mode1 = 0; //NORMAL
-			Menu_contents.current_menu++;
 			return;
 		}
 		
@@ -389,7 +362,6 @@ void Change_page(){
 			Controller_Menu();
 			Controller_Menu();
 			game_mode1 = 1; //ARCADE
-			Menu_contents.current_menu++;
 			return;
 		}
 		
@@ -397,7 +369,6 @@ void Change_page(){
 			OLED_reset();
 			Main_menu();
 			Main_menu();
-			Menu_contents.current_menu--;
 			return;
 		}
 	}
@@ -408,7 +379,6 @@ void Change_page(){
 			Difficulty_Menu();
 			Difficulty_Menu();
 			controller_setting = 0; //JOYSTICK
-			Menu_contents.current_menu++;
 			return;
 		}
 		
@@ -417,7 +387,6 @@ void Change_page(){
 			Difficulty_Menu();
 			Difficulty_Menu();
 			controller_setting = 1; //SLIDER
-			Menu_contents.current_menu++;
 			return;
 		}
 		
@@ -425,7 +394,6 @@ void Change_page(){
 			OLED_reset();
 			Game_Modes_Menu();
 			Game_Modes_Menu();
-			Menu_contents.current_menu--;
 			return;
 		}
 	}
@@ -434,8 +402,7 @@ void Change_page(){
 		if (current_index == 2){ // EASY
 			OLED_reset();
 			difficulty = 0;
-			printf("%d \r\n",game_mode1);
-			Menu_contents.current_menu++;
+			//printf("%d \r\n",game_mode1);
 			start_game();
 			return;
 		}
@@ -443,7 +410,6 @@ void Change_page(){
 		if (current_index == 3){ // MEDIUM
 			OLED_reset();
 			difficulty = 1;
-			Menu_contents.current_menu++;
 			start_game();
 			return;
 		}
@@ -451,7 +417,6 @@ void Change_page(){
 		if (current_index == 4){ // HARD
 			OLED_reset();
 			difficulty = 2;
-			Menu_contents.current_menu++;
 			start_game();
 			return;
 		}
@@ -460,7 +425,6 @@ void Change_page(){
 			OLED_reset();
 			Controller_Menu();
 			Controller_Menu();
-			Menu_contents.current_menu--;
 			return;
 		}
 	}
@@ -473,7 +437,6 @@ void Change_page(){
 			OLED_reset();
 			Main_menu();
 			Main_menu();
-			Menu_contents.current_menu = 0;
 			return;
 		}
 	}

@@ -181,6 +181,9 @@
     <Compile Include="Menu.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Menu_strings.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="OLED.c">
       <SubType>compile</SubType>
     </Compile>
